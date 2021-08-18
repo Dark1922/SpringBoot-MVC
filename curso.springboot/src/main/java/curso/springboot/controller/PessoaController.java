@@ -13,33 +13,42 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class PessoaController {
 
-	//autowride se n tivesse allargscontructor
+	// autowride se n tivesse allargscontructor
 	private PessoaRepository pessoaRepository;
-	
+
 	@RequestMapping(method = RequestMethod.GET, value = "/cadastropessoa")
 	public String inicio() {
-		
+
 		return "cadastro/cadastropessoa";
 	}
-	
+
 	@RequestMapping(method = RequestMethod.POST, value = "/salvarpessoa")
-	public String salvar(Pessoa pessoa) {
-		
+	public ModelAndView salvar(Pessoa pessoa) {
+
 		pessoaRepository.save(pessoa);
-		return "cadastro/cadastropessoa";
+
+		ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa");
+
+		// retorna iterable por isso n vai por uma lista
+		Iterable<Pessoa> pessoasIterator = pessoaRepository.findAll();
+
+		// para o objeto de pessoas joga a lista pramim
+		modelAndView.addObject("pessoas", pessoasIterator);
+
+		return  modelAndView;
 	}
-	
+
 	@RequestMapping(method = RequestMethod.GET, value = "/listapessoas")
 	public ModelAndView pessoas() {
-		
+
 		ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa");
-		
-		//retorna iterable por isso n vai por uma lista
+
+		// retorna iterable por isso n vai por uma lista
 		Iterable<Pessoa> pessoasIterator = pessoaRepository.findAll();
-		
-		//para o objeto de pessoas joga a lista pramim
+
+		// para o objeto de pessoas joga a lista pramim
 		modelAndView.addObject("pessoas", pessoasIterator);
-		
+
 		return modelAndView;
 	}
- }
+}
