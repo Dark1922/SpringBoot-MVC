@@ -25,4 +25,8 @@ public class Pessoa implements Serializable {
 	private String nome;
 	
 	private String sobrenome;
+	
+	private Integer idade;
+	
+
 }

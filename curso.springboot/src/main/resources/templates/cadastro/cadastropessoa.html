@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <title>Cadastro</title>
@@ -9,8 +9,27 @@
 	<!-- url do controller pra salvar a pessoa -->
 	<form action="salvarpessoa" method="post">
 
-		<label>Nome</label> <input name="nome"> <label>Sobrenome</label>
-		<input name="sobrenome"> <input type="submit" value="Salvar">
+
+		<label>Nome</label> <input name="nome"> 
+		
+		<label>Sobrenome</label> <input name="sobrenome"> 
+		
+		<label>Idade</label> <input name="idade">
+		
+		<input type="submit" value="Salvar" />
+		
 	</form>
+	
+	<table>
+	<!-- pessoas é oq vai vir do banco de dados e pessoa é oque vai interar / usar pra mostrar na tela -->
+	<tr th:each = "pessoa : ${pessoas}">
+	<td th:text = "${pessoa.id}"></td>
+	<td th:text = "${pessoa.nome}"></td>
+	<td th:text = "${pessoa.sobrenome}"></td>
+	<td th:text = "${pessoa.idade}"></td>
+	</tr>
+	
+	</table>
+	
 </body>
 </html>
