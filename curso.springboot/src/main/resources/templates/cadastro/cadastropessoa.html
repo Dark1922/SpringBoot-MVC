@@ -3,6 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <title>Cadastro</title>
+
+ <!--Import Google Icon Font-->
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <!--Import materialize.css-->
+      <link type="text/css" rel="stylesheet" href="materialize/css/materialize.css"  media="screen,projection"/>
+      <link type="text/css" rel="stylesheet" href="materialize/css/materialize.min.css"  media="screen,projection"/>
 </head>
 <body>
 	<h1>Cadastro de pessoa</h1>
@@ -16,11 +22,11 @@
 		
 		<label>Idade</label> <input name="idade">
 		
-		<input type="submit" value="Salvar" />
+		<input class="waves-effect waves-light btn" type="submit" value="Salvar" />
 		
 	</form>
 	
-	<a href="/listapessoas">Usuários Cadastrados</a>
+	<a class="waves-effect waves-light btn" href="/listapessoas" style="margin-top:19px;">Usuários Cadastrados</a>
 	
 	<table>
 	<!-- pessoas é oq vai vir do banco de dados e pessoa é oque vai interar / usar pra mostrar na tela -->
@@ -33,5 +39,9 @@
 	
 	</table>
 	
+	
+	  <!--JavaScript at end of body for optimized loading-->
+      <script type="text/javascript" src="materialize/js/materialize.min.js"></script>
+      <script type="text/javascript" src="materialize/js/materialize.js"></script>
 </body>
 </html>
