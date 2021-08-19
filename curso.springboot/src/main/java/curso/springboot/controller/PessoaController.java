@@ -115,7 +115,7 @@ public class PessoaController {
 		
 		//objeto pessoas vai passar o parametro de pesquisar por nome
 		//vai pesquisar todas pessoas de acordo com a pesquisar que vier
-		modelAndView.addObject("pessoas", pessoaRepository.findPessoaByName(nomepesquisa));
+		modelAndView.addObject("pessoas", pessoaRepository.findPessoaByName(nomepesquisa.trim().toUpperCase()));
 		
 		//objeto vazio pro formulário trabalhar corretamente
 		modelAndView.addObject("pessoaobj", new Pessoa());

@@ -14,7 +14,7 @@ import curso.springboot.model.Pessoa;
 public interface PessoaRepository extends CrudRepository<Pessoa, Long>{
 
 	//parte de consultar pessoa p abreviação like por parte de nome
-	@Query("select p from Pessoa p where p.nome like %?1%") //1 parametro ?1
+	@Query("select p from Pessoa p where upper(trim(p.nome)) like %?1%") //1 parametro ?1
 	List<Pessoa> findPessoaByName(String nome);
 	
 }
