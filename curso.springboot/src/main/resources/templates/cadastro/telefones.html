@@ -33,7 +33,36 @@
 	</div>
 	</div>
 	</div>
-	<a style="margin-left:20px;" class="waves-effect waves-light btn" href="/cadastropessoa">Cadastro de Pessoas</a>
+	
+	<h5 style= margin-left:20px;>Telefones</h5>
+	
+	<div class="row" style="margin-top:45px;">
+	                                                   <!-- vai pegar o id da pessoa pelo obj -->
+	<form th:action="@{/addfonePessoa/{pessoaid}(pessoaid=${pessoaobj.id})}" method="post" class="col s9">
+	
+	<div class="row">
+	
+	<div class="input-field col s6">
+	   <label class="active" for="numero">Número</label>
+	   <input id="numero" name="numero" class="validate">
+	</div>
+	
+	<div class="input-field col s6">
+	    <label class="active" for="tipo">Tipo</label>
+	   <input id="tipo" name="tipo" class="validate">
+	</div>
+	
+	<div class="row" style="margin-left:10px;">
+	<input type="submit" value="Adicionar" class="waves-effect waves-light btn">
+	</div>
+	</div>
+	
+	
+	</form>
+	
+	</div>
+	
+	<a style="margin-left:20px; margin-top:30px;" class="waves-effect waves-light btn" href="/cadastropessoa">Cadastro de Pessoas</a>
 	  <!--JavaScript at end of body for optimized loading-->
       <script type="text/javascript" src="/materialize/js/materialize.min.js"></script>
       <script type="text/javascript" src="/materialize/js/materialize.js"></script>

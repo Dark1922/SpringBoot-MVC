@@ -2,7 +2,6 @@ package curso.springboot.model;
 
 import java.io.Serializable;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,6 +13,7 @@ import org.hibernate.annotations.ForeignKey;
 import lombok.Getter;
 import lombok.Setter;
 
+@SuppressWarnings("deprecation")
 @Entity
 @Getter
 @Setter

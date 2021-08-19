@@ -6,14 +6,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import curso.springboot.model.Pessoa;
+import curso.springboot.model.Telefone;
 import curso.springboot.repository.PessoaRepository;
+import curso.springboot.repository.TelefoneRepository;
 import lombok.AllArgsConstructor;
 
 @Controller
@@ -22,6 +23,8 @@ public class PessoaController {
 
 	// autowride se n tivesse allargscontructor
 	private PessoaRepository pessoaRepository;
+	private TelefoneRepository telefoneRepository; 
+   
 
 	@RequestMapping(method = RequestMethod.GET, value = "/cadastropessoa")
 	public ModelAndView inicio() {
@@ -143,6 +146,27 @@ public class PessoaController {
 			//vai addicionar o objeto pessoa com get que vai buscar seus dados pra edição
 			modelAndView.addObject("pessoaobj", pessoa.get());
 			
+			
+			return modelAndView;
+		}
+		
+		//n interessa oque vem antes da url, e junto vai vir o pessoa id que clicamos no mome tabela
+		@PostMapping("**/addfonePessoa/{pessoaid}")
+		public	ModelAndView addFonePessoa(Telefone telefone , 
+				@PathVariable("pessoaid")Long pessoaid) {
+			
+			//código da pessoa que recebeu .get com seus dados
+			Pessoa pessoa =  pessoaRepository.findById(pessoaid).get();
+			
+			telefone.setPessoa(pessoa); //seta o telefone pra essa pessoa do id que ta recebendo
+			
+			telefoneRepository.save(telefone); //salva método repository passando o telefone com os dados
+			
+			//traz o retorno pro cadastro telefones
+			ModelAndView modelAndView = new ModelAndView("cadastro/telefones");
+			
+			//passa o pai pra retorna pra sua tela onde cadastro o telefone com seu id
+			modelAndView.addObject("pessoaobj", pessoa);
 			
 			return modelAndView;
 		}
