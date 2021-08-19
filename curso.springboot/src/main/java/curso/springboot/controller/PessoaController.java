@@ -86,4 +86,22 @@ public class PessoaController {
 		
 		return modelAndView;
 	}
+	
+	@GetMapping("/removerpessoa/{idpessoa}")
+	public ModelAndView	excluir(@PathVariable("idpessoa") Long idpessoa) {
+		
+        pessoaRepository.deleteById(idpessoa); //deleta por id  
+		
+		//vai retorna pra mesma tela de cadastro o retorno
+		ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa");
+		
+		//vai objeto pessoas da tabela pra atualizar qnd excluir alguma pessoa
+		modelAndView.addObject("pessoas", pessoaRepository.findAll());
+		
+		//objeto vazio pro formulário trabalhar corretamente
+		modelAndView.addObject("pessoaobj", new Pessoa());
+		
+		
+		return modelAndView;
+	}
 }

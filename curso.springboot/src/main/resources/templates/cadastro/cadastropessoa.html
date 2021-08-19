@@ -40,6 +40,7 @@
 	<td th:text = "${pessoa.sobrenome}"></td>
 	<!-- editar o parametros junto com o idpesosa id da pessoa onde o idpessoa é igual o id da linha -->
 	<td><a th:href="@{/editarpessoa/{idpessoa}(idpessoa=${pessoa.id})}" class="waves-effect waves-light btn" >Editar</a></td>
+		<td><a th:href="@{/removerpessoa/{idpessoa}(idpessoa=${pessoa.id})}" class="waves-effect waves-light red btn" >Excluir</a></td>
 	</tr>
 	
 	</table>
