@@ -11,7 +11,7 @@
       <link type="text/css" rel="stylesheet" href="/materialize/css/materialize.min.css"  media="screen,projection"/>
 </head>
 <body>
-	<h1>Cadastro de pessoa</h1>
+	<h2>Cadastro de pessoa</h2>
 	<!-- url do controller pra salvar a pessoa -->
 	<!-- vai trabalhar com objeto ai passa essa tag do thymeleaf th:object="pessoaobj" obj do controller -->
 	<form action="salvarpessoa" method="post" th:object="${pessoaobj}">
@@ -24,20 +24,40 @@
 		
 		<label>Sobrenome</label> <input name="sobrenome" required="required" th:field="*{sobrenome}"> 
 		
-		<label>Idade</label> <input name="idade" required="required" maxlength="2" th:field="*{idade}"  >
+		<label>Idade</label> <input name="idade" required="required"  th:field="*{idade}" type="number" maxlength="2">
 		
-		<input class="waves-effect waves-light btn" type="submit" value="Salvar" style="color:white;"/>
+		<input class="waves-effect waves-light btn" type="submit" value="Salvar" style="margin-top:10px;" />
 		
 	</form>
 	
-	<a class="waves-effect waves-light btn" href="/listapessoas" style="margin-top:19px;">Usuários Cadastrados</a>
+	<a class="waves-effect waves-light btn" href="/listapessoas" style="margin-top:23px;">Usuários Cadastrados</a>
 	
-	<table>
+	<form action="pesquisarpessoa" style="margin-top:20px;" method="post">
+	<label>Pesquisa por nome:</label>
+	<input name="nomepesquisa">
+	<input type="submit" value="Buscar" class="waves-effect waves-light light-blue btn">
+	</form>
+	
+	
+	<table style="margin-top:15px;">
+	
+	<thead>
+          <tr>
+          <th>Id</th>
+              <th>Nome</th>
+              <th>Sobrenome</th>
+              <th>Idade</th>
+              <th>Update</th>
+              <th>Remove</th>
+          </tr>
+        </thead>
+	
 	<!-- pessoas é oq vai vir do banco de dados e pessoa é oque vai interar / usar pra mostrar na tela -->
 	<tr th:each = "pessoa : ${pessoas}">
 	<td th:text = "${pessoa.id}"></td>
 	<td th:text = "${pessoa.nome}"></td>
 	<td th:text = "${pessoa.sobrenome}"></td>
+	<td th:text = "${pessoa.idade}"></td>
 	<!-- editar o parametros junto com o idpesosa id da pessoa onde o idpessoa é igual o id da linha -->
 	<td><a th:href="@{/editarpessoa/{idpessoa}(idpessoa=${pessoa.id})}" class="waves-effect waves-light btn" >Editar</a></td>
 		<td><a th:href="@{/removerpessoa/{idpessoa}(idpessoa=${pessoa.id})}" class="waves-effect waves-light red btn" >Excluir</a></td>

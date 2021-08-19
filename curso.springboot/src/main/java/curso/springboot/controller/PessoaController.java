@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import curso.springboot.model.Pessoa;
@@ -101,6 +102,23 @@ public class PessoaController {
 		//objeto vazio pro formulário trabalhar corretamente
 		modelAndView.addObject("pessoaobj", new Pessoa());
 		
+		
+		return modelAndView;
+	}
+	
+	//n interessa oque vem antes de url
+	@PostMapping("**/pesquisarpessoa")
+	public ModelAndView pesquisar(@RequestParam("nomepesquisa") String nomepesquisa) {
+		
+		//vai consultar e retornar para mesma tela de cadastro
+		ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa");
+		
+		//objeto pessoas vai passar o parametro de pesquisar por nome
+		//vai pesquisar todas pessoas de acordo com a pesquisar que vier
+		modelAndView.addObject("pessoas", pessoaRepository.findPessoaByName(nomepesquisa));
+		
+		//objeto vazio pro formulário trabalhar corretamente
+		modelAndView.addObject("pessoaobj", new Pessoa());
 		
 		return modelAndView;
 	}
