@@ -30,6 +30,13 @@ public class PessoaController {
 		
 		//retorna uma pessoa vázia pra poder aparecer a tela normalmente
 		modelAndView.addObject("pessoaobj", new Pessoa());
+		
+		//carrega a lista qnd entrar no cadastropessoa
+		// retorna iterable por isso n vai por uma lista
+		Iterable<Pessoa> pessoasIterator = pessoaRepository.findAll();
+
+		// para o objeto de pessoas joga a lista pramim
+		modelAndView.addObject("pessoas", pessoasIterator);
 
 		return modelAndView;
 	}
@@ -122,4 +129,21 @@ public class PessoaController {
 		
 		return modelAndView;
 	}
+	
+	//pega na url o id pessoa
+		@GetMapping("/telefones/{idpessoa}")
+		public ModelAndView	telefones(@PathVariable("idpessoa") Long idpessoa) {
+			
+			//vai buscar o id da pessoa carregar o objeto do banco de dados q consultou
+			Optional<Pessoa> pessoa = pessoaRepository.findById(idpessoa);
+			
+			//vai retorna pra mesma tela de cadastro o retorno
+			ModelAndView modelAndView = new ModelAndView("cadastro/telefones");
+			
+			//vai addicionar o objeto pessoa com get que vai buscar seus dados pra edição
+			modelAndView.addObject("pessoaobj", pessoa.get());
+			
+			
+			return modelAndView;
+		}
 }

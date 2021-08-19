@@ -15,7 +15,7 @@
       form input[type=submit] {
       color:white
       }
-      
+     
       </style>
 </head>
 <body>
@@ -47,9 +47,10 @@
 		<label for="idade" class="active">Idade</label> <input name="idade" required="required"  th:field="*{idade}" type="number" maxlength="2" id="idade" class="validate">
 		
 		<div class="row">
-		<div class="input-field col s6">
-		<input class="waves-effect waves-light btn" type="submit" value="Salvar" style="margin-top:10px;" />
-		<button class="waves-effect waves-light btn"  onclick="document.getElementById('formpessoa').reset(); " >Novo</button>
+		<div class="input-field col s12">
+		<input class="waves-effect waves-light btn" type="submit" value="Salvar"/>
+		
+		<button class="waves-effect waves-light btn"  onclick="document.getElementById('formpessoa').reset(); ">Novo</button>
 		</div>
 		</div>
 	</form>
@@ -87,7 +88,7 @@
 	<!-- pessoas é oq vai vir do banco de dados e pessoa é oque vai interar / usar pra mostrar na tela -->
 	<tr th:each = "pessoa : ${pessoas}">
 	<td th:text = "${pessoa.id}"></td>
-	<td th:text = "${pessoa.nome}"></td>
+	<td><a style="color:black;" th:href="@{/telefones/{idpessoa}(idpessoa=${pessoa.id})}"><span th:text = "${pessoa.nome}"></span></a></td>
 	<td th:text = "${pessoa.sobrenome}"></td>
 	<td th:text = "${pessoa.idade}"></td>
 	<!-- editar o parametros junto com o idpesosa id da pessoa onde o idpessoa é igual o id da linha -->
@@ -96,6 +97,19 @@
 	</tr>
 	</table>
 	</div>
+	
+	
+	
+	
+        <footer class="page-footer grey">
+         
+          <div>
+            <div class="container" style="justify-content:center; display:flex" >
+            © 2021 Copyright Text
+          
+            </div>
+          </div>
+        </footer>
 	
 	  <!--JavaScript at end of body for optimized loading-->
       <script type="text/javascript" src="/materialize/js/materialize.min.js"></script>
