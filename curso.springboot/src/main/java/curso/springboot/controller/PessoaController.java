@@ -189,10 +189,32 @@ public class PessoaController {
 		public	ModelAndView addFonePessoa(@Valid  Telefone telefone , 
 				@PathVariable("pessoaid")Long pessoaid) {
 			
-			
-			
 			//código da pessoa que recebeu .get com seus dados classe pai
 			Pessoa pessoa =  pessoaRepository.findById(pessoaid).get();
+			
+			if  (telefone != null && telefone.getNumero().isEmpty() || telefone.getTipo().isEmpty())  {
+				
+				//traz o retorno pro cadastro telefones
+				ModelAndView modelAndView = new ModelAndView("cadastro/telefones");
+				
+				modelAndView.addObject("pessoaobj", pessoa); //objeto pessoa retorna pra mostra ele
+				
+				//carrega a lista de teleofnes da pessoa
+				modelAndView.addObject("telefones", telefoneRepository.getTelefones(pessoaid));
+				 
+				List<String> msg  = new  ArrayList<String>();
+				
+				if(telefone.getNumero().isEmpty()) {
+				msg.add("Número deve ser informado");
+				}
+				
+				if(telefone.getTipo().isEmpty()) {
+					msg.add("Tipo deve ser informado");
+					}
+				
+				modelAndView.addObject("msg", msg );//variavel msg adiciona lista de msg de erros 
+				return modelAndView;
+			}
 			
 			telefone.setPessoa(pessoa); //seta o telefone pra essa pessoa do id que ta recebendo
 			

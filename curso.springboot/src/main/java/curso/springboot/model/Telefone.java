@@ -26,10 +26,8 @@ public class Telefone implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 	
-	@NotEmpty(message = "Numero é obrigatório")
 	private String numero;
 	
-	@NotEmpty(message = "Tipo é obrigatório")
 	private String tipo;
 	
 	@ManyToOne

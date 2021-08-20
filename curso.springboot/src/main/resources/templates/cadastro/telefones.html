@@ -36,20 +36,25 @@
 	
 	<h5 style= margin-left:20px;>Telefones</h5>
 	
+	<div th:each = "m : ${msg}"> <!-- each vai varrer uma lista a de erros -->
+	      <span th:text = ${m} style="color:red; font-size:20px; margin-left:20px; margin-top:30px;">
+	      </span> <!-- passa um texto com nosso objeto de msg dos erro de validação -->
+	</div>
+	
 	<div class="row" style="margin-top:45px;">
 	                                                   <!-- vai pegar o id da pessoa pelo obj -->
-	<form th:action="@{/addfonePessoa/{pessoaid}(pessoaid=${pessoaobj.id})}" method="post" class="col s9">
+	<form th:action="@{/addfonePessoa/{pessoaid}(pessoaid=${pessoaobj.id})}" method="post" class="col s9" onsubmit="return validarCampos()? true : false">
 	
 	<div class="row">
 	
 	<div class="input-field col s6">
 	   <label class="active" for="numero">Número</label>
-	   <input id="numero" name="numero" class="validate" required="required">
+	   <input id="numero" name="numero" class="validate" >
 	</div>
 	
 	<div class="input-field col s6">
 	    <label class="active" for="tipo">Tipo</label>
-	   <input id="tipo" name="tipo" class="validate" required="required">
+	   <input id="tipo" name="tipo" class="validate" >
 	</div>
 	
 	<div class="row" style="margin-left:10px;">
@@ -87,5 +92,27 @@
 	<!--JavaScript at end of body for optimized loading-->
       <script type="text/javascript" src="/materialize/js/materialize.min.js"></script>
       <script type="text/javascript" src="/materialize/js/materialize.js"></script>
+      
+      <script type="text/javascript">
+      function validarCampos() {
+    	  
+    	  numero = document.getElementById('numero').value;
+    	  tipo = document.getElementById('tipo').value;
+
+    	  if(numero === '') {
+    		  alert('Numero deve ser informado')
+    		  return false;
+    		  
+    	  }else if(tipo === '') {
+    		  alert('Tipo deve ser Informado')
+    		  return false;
+    	  
+    	  }
+    	  
+    	  alert(`${numero} Cadastrado com Sucesso!`)
+    	  return true
+    	  
+      }
+      </script>
 </body>
 </html>

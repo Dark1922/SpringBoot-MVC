@@ -38,7 +38,7 @@ public class Pessoa implements Serializable {
 	private String sobrenome;
 	
 	@Min(value = 18, message = "Idade Inválida apenas maiores de 18 anos")
-	private Integer idade;
+	private int idade;
 	
 	//referencia o nome do relacionamento da outra classe
 	//orphanRemoval = true, cascade = CascadeType.ALL permite excluir em cascata
