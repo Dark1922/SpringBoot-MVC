@@ -26,17 +26,16 @@ public class Usuario implements UserDetails {
 
 	private String login;
 
-	private String Senha;
+	private String senha;
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public String getPassword() {
-		return Senha;
+		return senha;
 	}
 
 	@Override
