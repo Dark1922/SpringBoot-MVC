@@ -61,9 +61,30 @@
 	</form>
 	
 	</div>
-	
-	<a style="margin-left:20px; margin-top:30px;" class="waves-effect waves-light btn" href="/cadastropessoa">Cadastro de Pessoas</a>
-	  <!--JavaScript at end of body for optimized loading-->
+		<a style="margin-left:20px; margin-top:30px;" class="waves-effect waves-light btn" href="/cadastropessoa">Cadastro de Pessoas</a>
+
+   <div class="row">
+	<table style="margin-top: 15px; margin-left: 5px"
+		class="striped col s12">
+
+		<thead>
+			<tr>
+				<th>Numero</th>
+				<th>Tipo</th>
+
+			</tr>
+		</thead>
+     
+		<tr th:each="fone : ${telefones}">
+		
+			<td th:text="${fone.numero}" />
+			
+			<td th:text="${fone.tipo}" />
+	<td><a th:href="@{/removertelefone/{idtelefone}(idtelefone=${fone.id})}" class="waves-effect waves-light red btn" >Excluir</a></td>
+		</tr>
+	</table>
+</div>
+	<!--JavaScript at end of body for optimized loading-->
       <script type="text/javascript" src="/materialize/js/materialize.min.js"></script>
       <script type="text/javascript" src="/materialize/js/materialize.js"></script>
 </body>

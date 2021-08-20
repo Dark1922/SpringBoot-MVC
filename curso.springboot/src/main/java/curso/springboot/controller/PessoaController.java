@@ -146,6 +146,8 @@ public class PessoaController {
 			//vai addicionar o objeto pessoa com get que vai buscar seus dados pra edição
 			modelAndView.addObject("pessoaobj", pessoa.get());
 			
+			//carrega os telefones dessa pessoa
+			modelAndView.addObject("telefones", telefoneRepository.getTelefones(idpessoa));
 			
 			return modelAndView;
 		}
@@ -155,7 +157,7 @@ public class PessoaController {
 		public	ModelAndView addFonePessoa(Telefone telefone , 
 				@PathVariable("pessoaid")Long pessoaid) {
 			
-			//código da pessoa que recebeu .get com seus dados
+			//código da pessoa que recebeu .get com seus dados classe pai
 			Pessoa pessoa =  pessoaRepository.findById(pessoaid).get();
 			
 			telefone.setPessoa(pessoa); //seta o telefone pra essa pessoa do id que ta recebendo
@@ -167,6 +169,31 @@ public class PessoaController {
 			
 			//passa o pai pra retorna pra sua tela onde cadastro o telefone com seu id
 			modelAndView.addObject("pessoaobj", pessoa);
+			
+			//passa pro telefones o métodos de vir a lista de telefone do usuario no método telefone
+			//vai receber o método id da pessoa que é o pai do telefone e vai consultar pelo repository 
+			//pela query vai consultar apenas pra gente os telefones dessa pessoa que foi selecionada
+			modelAndView.addObject("telefones", telefoneRepository.getTelefones(pessoaid));
+			
+			return modelAndView;
+		}
+		
+		@GetMapping("/removertelefone/{idtelefone}")
+		public ModelAndView	excluirTelefone(@PathVariable("idtelefone") Long idtelefone) {
+			
+			//retorna o objeto pai telefone e pessoa 
+		Pessoa pessoa =	telefoneRepository.findById(idtelefone).get().getPessoa();
+			
+	        telefoneRepository.deleteById(idtelefone); //deleta por id o telefone que quer  
+			
+			//vai retorna pra mesma tela de cadastro o retorno
+			ModelAndView modelAndView = new ModelAndView("cadastro/telefones");
+			
+			//objeto pessoa pai pra mostrar na tela
+			modelAndView.addObject("pessoaobj", new Pessoa());
+			
+			//carregar os objetos novamente menos o que foi removido
+			modelAndView.addObject("telefones", telefoneRepository.getTelefones(pessoa.getId()));
 			
 			return modelAndView;
 		}
