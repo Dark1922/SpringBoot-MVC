@@ -1,8 +1,14 @@
 package curso.springboot.controller;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -47,8 +53,34 @@ public class PessoaController {
 	// **/salvarpessoa ele intercepta salvar pessoa de qualquer forma
 	//ignora tudo que venha antes e pegue a pessoa que quer salvar
 	@PostMapping(value = "**/salvarpessoa")
-	public ModelAndView salvar(Pessoa pessoa) {
+	public ModelAndView salvar(@Valid Pessoa pessoa, BindingResult bindingResult ) {
 
+		//validações @Valid pra usar as validações do model
+		//bindingResult objetos de erro
+		if(bindingResult.hasErrors()) { //se tiver erro vai entrar aqui dentro
+			
+			ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa");
+			Iterable<Pessoa> pessoasIterator = pessoaRepository.findAll();
+			modelAndView.addObject("pessoas", pessoasIterator);
+			
+			//passa o objeto que ta vindo da view vai continuar os dados da pessoa
+			//fazer a validação e mostrar os erros que tá tendo
+			modelAndView.addObject("pessoaobj", pessoa);
+			
+			List<String> msgValidacao = new ArrayList<String>();
+			
+			//varre os erros encontrados pelo objetos de erros e a lista do binding
+			for(ObjectError objectError : bindingResult.getAllErrors()) {
+				
+				//getDefaultMessage() vem das anotações da model NotBlank e outras
+				msgValidacao.add(objectError.getDefaultMessage());
+			}
+			
+			modelAndView.addObject("msg", msgValidacao);
+			
+			return modelAndView;
+		}
+		
 		pessoaRepository.save(pessoa);
 
 		ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa");
@@ -154,8 +186,10 @@ public class PessoaController {
 		
 		//n interessa oque vem antes da url, e junto vai vir o pessoa id que clicamos no mome tabela
 		@PostMapping("**/addfonePessoa/{pessoaid}")
-		public	ModelAndView addFonePessoa(Telefone telefone , 
+		public	ModelAndView addFonePessoa(@Valid  Telefone telefone , 
 				@PathVariable("pessoaid")Long pessoaid) {
+			
+			
 			
 			//código da pessoa que recebeu .get com seus dados classe pai
 			Pessoa pessoa =  pessoaRepository.findById(pessoaid).get();
@@ -197,4 +231,6 @@ public class PessoaController {
 			
 			return modelAndView;
 		}
+		
+		
 }
