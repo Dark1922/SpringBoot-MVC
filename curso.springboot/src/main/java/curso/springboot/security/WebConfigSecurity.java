@@ -27,13 +27,15 @@ public class WebConfigSecurity extends WebSecurityConfigurerAdapter {
 	   .disable() //Desativa as configurações de memoria do spring.
 	   .authorizeRequests() //permiti restringir acessos
 	   .antMatchers(HttpMethod.GET, "/").permitAll() //qualquer usuário acessa á página inicial
+	   .antMatchers(HttpMethod.GET, "/materialize/**").permitAll()
 	   .antMatchers(HttpMethod.GET, "/cadastropessoa").hasAnyRole("ADMIN") 
 	   .anyRequest().authenticated()
 	   .and().formLogin().permitAll() //formulario de login permite qlq usuario
 	   .loginPage("/login") //página de login
 	   .defaultSuccessUrl("/cadastropessoa") //se logar manda ele pra essa página
 	   .failureUrl("/login?error=true") //caso falhe o login	
-	   .and().logout().logoutSuccessUrl("/login") //mapeia url delogout e invalida usuario autenticado deslogar vai pro /login
+	   .and()
+	   .logout().logoutSuccessUrl("/login") //mapeia url delogout e invalida usuario autenticado deslogar vai pro /login
 	   .logoutRequestMatcher(new  AntPathRequestMatcher("/logout"));//vai invalidar sessão /logout
 
 	}
@@ -57,6 +59,8 @@ public class WebConfigSecurity extends WebSecurityConfigurerAdapter {
 	@Override //ignora URL especificas
 	public void configure(WebSecurity web) throws Exception {
 		//deixa liberado a pasta que dá o css js pro nosso sistema
-		web.ignoring().antMatchers("/materialize/**");
+		 web.ignoring().antMatchers("/materialize/**")
+
+         .antMatchers(HttpMethod.GET,"/resources/**","/static/**", "/**","/materialize/**", "**/materialize/**");
 	}
 }

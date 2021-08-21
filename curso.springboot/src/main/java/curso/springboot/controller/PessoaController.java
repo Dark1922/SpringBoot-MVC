@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.CascadeType;
 import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
@@ -52,10 +53,13 @@ public class PessoaController {
 
 	// **/salvarpessoa ele intercepta salvar pessoa de qualquer forma
 	//ignora tudo que venha antes e pegue a pessoa que quer salvar
+	//validações @Valid pra usar as validações do model
 	@PostMapping(value = "**/salvarpessoa")
 	public ModelAndView salvar(@Valid Pessoa pessoa, BindingResult bindingResult ) {
 
-		//validações @Valid pra usar as validações do model
+		//carrega o telefone dos filho pra poder atualizar pq está cascade = CascadeType.ALL
+		pessoa.setTelefones(telefoneRepository.getTelefones(pessoa.getId()));
+		
 		//bindingResult objetos de erro
 		if(bindingResult.hasErrors()) { //se tiver erro vai entrar aqui dentro
 			

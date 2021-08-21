@@ -38,6 +38,18 @@ public class Pessoa implements Serializable {
 	@Min(value = 18, message = "Idade Inválida apenas maiores de 18 anos")
 	private int idade;
 	
+	private String cep;
+	
+	private String rua;
+	
+	private String bairro;
+	
+	private String cidade;
+	
+	private String uf;
+	
+	private String ibge;
+	
 	//referencia o nome do relacionamento da outra classe
 	//orphanRemoval = true, cascade = CascadeType.ALL permite excluir em cascata
 	@OneToMany(mappedBy = "pessoa", orphanRemoval = true, cascade = CascadeType.ALL) 
