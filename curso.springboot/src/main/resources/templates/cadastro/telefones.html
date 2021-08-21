@@ -4,11 +4,8 @@
 <meta charset="UTF-8">
 <title>Cadastro</title>
 
- <!--Import Google Icon Font-->
-      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-      <!--Import materialize.css-->
-      <link type="text/css" rel="stylesheet" href="/materialize/css/materialize.css"  media="screen,projection"/>
-      <link type="text/css" rel="stylesheet" href="/materialize/css/materialize.min.css"  media="screen,projection"/>
+<!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
       
       <!-- onde todos botão do form input do tipo submit sejam da cor branca -->
       <style type="text/css">
@@ -49,12 +46,12 @@
 	
 	<div class="input-field col s6">
 	   <label class="active" for="numero">Número</label>
-	   <input id="numero" name="numero" class="validate" >
+	   <input id="numero" name="numero" class="validate" required="required" >
 	</div>
 	
 	<div class="input-field col s6">
 	    <label class="active" for="tipo">Tipo</label>
-	   <input id="tipo" name="tipo" class="validate" >
+	   <input id="tipo" name="tipo" class="validate"  required="required">
 	</div>
 	
 	<div class="row" style="margin-left:10px;">
@@ -66,7 +63,7 @@
 	</form>
 	
 	</div>
-		<a style="margin-left:20px; margin-top:30px;" class="waves-effect waves-light btn" href="/cadastropessoa">Cadastro de Pessoas</a>
+		<a style="margin-left:10px;" class="waves-effect waves-light btn" href="/cadastropessoa">Cadastro de Pessoas</a>
 
    <div class="row">
 	<table style="margin-top: 15px; margin-left: 5px"
@@ -89,9 +86,9 @@
 		</tr>
 	</table>
 </div>
-	<!--JavaScript at end of body for optimized loading-->
-      <script type="text/javascript" src="/materialize/js/materialize.min.js"></script>
-      <script type="text/javascript" src="/materialize/js/materialize.js"></script>
+	<!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+      
       
       <script type="text/javascript">
       function validarCampos() {

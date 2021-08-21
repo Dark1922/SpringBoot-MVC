@@ -1,14 +1,11 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="UTF-8">
 <title>Cadastro</title>
 
- <!--Import Google Icon Font-->
-      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-      <!--Import materialize.css-->
-      <link type="text/css" rel="stylesheet" href="/materialize/css/materialize.css"  media="screen,projection"/>
-      <link type="text/css" rel="stylesheet" href="/materialize/css/materialize.min.css"  media="screen,projection"/>
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
       
       <!-- onde todos botão do form input do tipo submit sejam da cor branca -->
       <style type="text/css">
@@ -51,8 +48,10 @@
 		<label for="sobrenome" class="active">Sobrenome</label> 
 		<input name="sobrenome"  th:field="*{sobrenome}" id="sobrenome" class="validate"> 
 		
+		<div sec:authorize="hasRole('ROLE_ADMIN')">
 		<label for="idade" class="active">Idade</label>
 		 <input name="idade"  th:field="*{idade}" type="number" maxlength="2" id="idade" class="validate"  >
+		</div>
 		
 		<div class="row">
 		<div class="input-field col s12">
@@ -80,7 +79,7 @@
   
   
     <div class="row">
-	<table style="margin-top:15px; margin-left:5px" class="striped col s12">
+	<table style="margin-top:15px;"  class="striped col s12">
 	
 	<thead>
           <tr>
@@ -95,10 +94,10 @@
 	
 	<!-- pessoas é oq vai vir do banco de dados e pessoa é oque vai interar / usar pra mostrar na tela -->
 	<tr th:each = "pessoa : ${pessoas}">
-	<td th:text = "${pessoa.id}"></td>
+	<td th:text = "${pessoa.id}"   width="100"/>
 	<td><a style="color:black;" th:href="@{/telefones/{idpessoa}(idpessoa=${pessoa.id})}"><span th:text = "${pessoa.nome}"></span></a></td>
-	<td th:text = "${pessoa.sobrenome}"></td>
-	<td th:text = "${pessoa.idade}"></td>
+	<td th:text = "${pessoa.sobrenome}"/>
+	<td th:text = "${pessoa.idade}"/>
 	<!-- editar o parametros junto com o idpesosa id da pessoa onde o idpessoa é igual o id da linha -->
 	<td><a th:href="@{/editarpessoa/{idpessoa}(idpessoa=${pessoa.id})}" class="waves-effect waves-light btn" >Editar</a></td>
 		<td><a th:href="@{/removerpessoa/{idpessoa}(idpessoa=${pessoa.id})}" class="waves-effect waves-light red btn" >Excluir</a></td>
@@ -119,8 +118,7 @@
           </div>
         </footer>
 	
-	  <!--JavaScript at end of body for optimized loading-->
-      <script type="text/javascript" src="/materialize/js/materialize.min.js"></script>
-      <script type="text/javascript" src="/materialize/js/materialize.js"></script>
+	<!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </body>
 </html>

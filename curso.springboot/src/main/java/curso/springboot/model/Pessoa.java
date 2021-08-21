@@ -29,12 +29,10 @@ public class Pessoa implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
-	@NotNull(message = "Nome é obrigatório")
-	@NotEmpty(message = "Nome é obrigatório")
+	@NotBlank(message = "Nome é Obrigatório")
 	private String nome;
 	
-	@NotNull(message = "Sobrenome é obrigatório")
-	@NotEmpty(message = "Sobrenome é obrigatório")
+	@NotBlank(message = "Sobrenome Obrigatório")
 	private String sobrenome;
 	
 	@Min(value = 18, message = "Idade Inválida apenas maiores de 18 anos")

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Login</title>
+<!-- Compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+<style type="text/css">
+form input[type=submit] {
+	color: white
+}
+</style>
+
+</head>
+<body>
+	<div style="text-align:center; margin-top:120px;">
+		<h4>Acesso ao Sistema</h4>
+	</div>
+
+	<form class="col s12" th:action=@{/login} method="post" style="display:grid; justify-content:center; margin-top:100px;">
+
+
+		<div class="row">
+
+			<div class="input-fiel col s12">
+				<label for="login" class="active">Login</label> <input
+					name="username" autocomplete="login" id="login" class="validate"
+					type="text">
+			</div>
+		</div>
+		<div class="row">
+			<div class="input-fiel col s12">
+				<label for="senha" class="active">Senha</label> <input
+					name="password" id="senha" class="validate" type="password">
+			</div>
+		</div>
+		<div class="row">
+			<div class="input-fiel col s12">
+				<input class="waves-effect waves-light btn" type="submit"
+					value="Login" />
+			</div>
+		</div>
+	</form>
+
+	<!-- Compiled and minified JavaScript -->
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</body>
+</html>
