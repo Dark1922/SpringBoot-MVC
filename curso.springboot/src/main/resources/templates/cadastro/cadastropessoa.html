@@ -1,43 +1,52 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="UTF-8">
 <title>Cadastro</title>
 
 
 
- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
- 
-       <!-- Adicionando JQuery -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
-            crossorigin="anonymous"></script>
-            
-      <!-- onde todos botão do form input do tipo submit sejam da cor branca -->
-      <style type="text/css">
-      form input[type=submit] {
-      color:white
-      }
-     
-      </style>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+<!-- Adicionando JQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+	integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+	crossorigin="anonymous"></script>
+
+<!-- onde todos botão do form input do tipo submit sejam da cor branca -->
+<style type="text/css">
+form input[type=submit] {
+	color: white
+}
+</style>
 </head>
 <body>
-	<h3 style=" margin-left:20px;">Spring Boot + Thymeleaf + Material Design Lite</h3>
-	<h5 style="margin-top:40px; margin-left:20px;">Cadastro de Pessoa</h5>
+	<h3 style="margin-left: 20px;">Spring Boot + Thymeleaf + Material
+		Design Lite</h3>
+	<h5 style="margin-top: 40px; margin-left: 20px;">Cadastro de
+		Pessoa</h5>
 	<!-- url do controller pra salvar a pessoa -->
 	<!-- vai trabalhar com objeto ai passa essa tag do thymeleaf th:object="pessoaobj" obj do controller -->
-	
-	<div th:each = "m : ${msg}"> <!-- each vai varrer uma lista a de erros -->
-	      <span th:text = ${m} style="color:red; font-size:20px; margin-left:20px; margin-top:30px;">
-	      </span> <!-- passa um texto com nosso objeto de msg dos erro de validação -->
-	</div>
-	
-	<div class="row">
-	
-	<form action="salvarpessoa" method="post" th:object="${pessoaobj}" class="col s12" id="formpessoa"><!-- coluna é feito pelo tamanho 12 -->
 
-        <div class="row">     <!-- vao ficar dentro de uma linha -->
+	<div th:each="m : ${msg}">
+		<!-- each vai varrer uma lista a de erros -->
+		<span th:text=${m}
+			style="color: red; font-size: 20px; margin-left: 20px; margin-top: 30px;">
+		</span>
+		<!-- passa um texto com nosso objeto de msg dos erro de validação -->
+	</div>
+
+	<div class="row">
+
+		<form action="salvarpessoa" method="post" th:object="${pessoaobj}"
+			class="col s12" id="formpessoa">
+			<!-- coluna é feito pelo tamanho 12 -->
+
+			<div class="row">
+				<!-- vao ficar dentro de uma linha -->
 
 				<div class="input-fiel col s1">
 					<label for="id">ID</label> <input name="id" th:field="*{id}"
@@ -46,8 +55,9 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 				</div>
 
 				<div class="input-fiel col s5">
-					<label for="nome" class="active">Nome</label> <input name="nome" 
-						autocomplete="name" th:field="*{nome}" id="nome" class="validate" placeholder="Informe o nome">
+					<label for="nome" class="active">Nome</label> <input name="nome"
+						autocomplete="name" th:field="*{nome}" id="nome" class="validate"
+						placeholder="Informe o nome">
 				</div>
 
 			</div>
@@ -59,13 +69,28 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 						class="validate">
 				</div>
 			</div>
- 
- <!-- sec:authorize="hasRole('ROLE_ADMIN')"  so admin pode acessar massa -->
-			<div class="row">
-		<div class="input-fiel col s6">
-		<label for="idade" class="active">Idade</label>
-		 <input name="idade"  th:field="*{idade}" type="number" maxlength="2" id="idade" class="validate" placeholder="sua idade" >
-		</div>
+
+			<!-- sec:authorize="hasRole('ROLE_CAIXA')"  so admin pode acessar massa -->
+			<div class="row" sec:authorize="hasRole('ROLE_CAIXA')">
+				<div class="input-fiel col s2">
+					<label for="idade" class="active">Idade</label> <input name="idade"
+						th:field="*{idade}" type="number" maxlength="2" id="idade"
+						class="validate" placeholder="sua idade">
+				</div>
+				<div class="input-fiel col s4">
+
+					<label for="sexopessoa" class="active">Sexo</label> 
+					<select
+						class="browser-default"  
+						th:field="*{sexopessoa}" id="sexopessoa"> <!--th:field endica a model desse atributo da pessoa  -->
+						<!-- pega layout do propio navegador -->
+						
+						<option value="" disabled selected >Selecione</option>
+                         <option value="MASCULINO" th:text="Masculino" >  
+						 	<option value="FEMININO" th:text="Feminino" > 
+			 </select>
+			 
+			</div>
 		</div>
 		
 		<div class="row">
@@ -181,71 +206,109 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     
      <!-- Adicionando Javascript -->
     <script>
+					$(document)
+							.ready(
+									function() {
 
-        $(document).ready(function() {
+										function limpa_formulário_cep() {
+											// Limpa valores do formulário de cep.
+											$("#rua").val("");
+											$("#bairro").val("");
+											$("#cidade").val("");
+											$("#uf").val("");
+											$("#ibge").val("");
+										}
 
-            function limpa_formulário_cep() {
-                // Limpa valores do formulário de cep.
-                $("#rua").val("");
-                $("#bairro").val("");
-                $("#cidade").val("");
-                $("#uf").val("");
-                $("#ibge").val("");
-            }
-            
-            //Quando o campo cep perde o foco.
-            $("#cep").blur(function() {
+										//Quando o campo cep perde o foco.
+										$("#cep")
+												.blur(
+														function() {
 
-                //Nova variável "cep" somente com dígitos.
-                var cep = $(this).val().replace(/\D/g, '');
+															//Nova variável "cep" somente com dígitos.
+															var cep = $(this)
+																	.val()
+																	.replace(
+																			/\D/g,
+																			'');
 
-                //Verifica se campo cep possui valor informado.
-                if (cep != "") {
+															//Verifica se campo cep possui valor informado.
+															if (cep != "") {
 
-                    //Expressão regular para validar o CEP.
-                    var validacep = /^[0-9]{8}$/;
+																//Expressão regular para validar o CEP.
+																var validacep = /^[0-9]{8}$/;
 
-                    //Valida o formato do CEP.
-                    if(validacep.test(cep)) {
+																//Valida o formato do CEP.
+																if (validacep
+																		.test(cep)) {
 
-                        //Preenche os campos com "..." enquanto consulta webservice.
-                        $("#rua").val("...");
-                        $("#bairro").val("...");
-                        $("#cidade").val("...");
-                        $("#uf").val("...");
-                        $("#ibge").val("...");
+																	//Preenche os campos com "..." enquanto consulta webservice.
+																	$("#rua")
+																			.val(
+																					"...");
+																	$("#bairro")
+																			.val(
+																					"...");
+																	$("#cidade")
+																			.val(
+																					"...");
+																	$("#uf")
+																			.val(
+																					"...");
+																	$("#ibge")
+																			.val(
+																					"...");
 
-                        //Consulta o webservice viacep.com.br/
-                        $.getJSON("https://viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados) {
+																	//Consulta o webservice viacep.com.br/
+																	$
+																			.getJSON(
+																					"https://viacep.com.br/ws/"
+																							+ cep
+																							+ "/json/?callback=?",
+																					function(
+																							dados) {
 
-                            if (!("erro" in dados)) {
-                                //Atualiza os campos com os valores da consulta.
-                                $("#rua").val(dados.logradouro);
-                                $("#bairro").val(dados.bairro);
-                                $("#cidade").val(dados.localidade);
-                                $("#uf").val(dados.uf);
-                                $("#ibge").val(dados.ibge);
-                            } //end if.
-                            else {
-                                //CEP pesquisado não foi encontrado.
-                                limpa_formulário_cep();
-                                alert("CEP não encontrado.");
-                            }
-                        });
-                    } //end if.
-                    else {
-                        //cep é inválido.
-                        limpa_formulário_cep();
-                        alert("Formato de CEP inválido.");
-                    }
-                } //end if.
-                else {
-                    //cep sem valor, limpa formulário.
-                    limpa_formulário_cep();
-                }
-            });
-        });
-
-    </script>
+																						if (!("erro" in dados)) {
+																							//Atualiza os campos com os valores da consulta.
+																							$(
+																									"#rua")
+																									.val(
+																											dados.logradouro);
+																							$(
+																									"#bairro")
+																									.val(
+																											dados.bairro);
+																							$(
+																									"#cidade")
+																									.val(
+																											dados.localidade);
+																							$(
+																									"#uf")
+																									.val(
+																											dados.uf);
+																							$(
+																									"#ibge")
+																									.val(
+																											dados.ibge);
+																						} //end if.
+																						else {
+																							//CEP pesquisado não foi encontrado.
+																							limpa_formulário_cep();
+																							alert("CEP não encontrado.");
+																						}
+																					});
+																} //end if.
+																else {
+																	//cep é inválido.
+																	limpa_formulário_cep();
+																	alert("Formato de CEP inválido.");
+																}
+															} //end if.
+															else {
+																//cep sem valor, limpa formulário.
+																limpa_formulário_cep();
+															}
+														});
+									});
+				</script>
 </body>
 </html>

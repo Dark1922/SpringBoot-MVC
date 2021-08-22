@@ -38,6 +38,8 @@ public class Pessoa implements Serializable {
 	@Min(value = 18, message = "Idade Inválida apenas maiores de 18 anos")
 	private int idade;
 	
+	private String sexopessoa;
+	
 	private String cep;
 	
 	private String rua;

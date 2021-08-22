@@ -28,7 +28,7 @@ public class Application implements WebMvcConfigurer {
 		//estamos pegando a view da url que vem padrão e passando pra nossa que é pra seta
 		registry.addViewController("/login").setViewName("/login");
 		
-		registry.setOrder(Ordered.LOWEST_PRECEDENCE);
+		registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
 		
 	}
 
