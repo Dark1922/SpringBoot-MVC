@@ -29,8 +29,8 @@ public class ReportUtil implements Serializable {
 		
 		//Carregar o caminho do arquivo jasper compilado pasta relatorios  /barra pa direita
 		//e p nome do relatorio e o nome final .jasper
-		String caminhoJasper = servletContext.getRealPath("relatarios") + 
-				File.separator + relatorio + ".jasper";
+		String caminhoJasper = servletContext.getRealPath("relatorios") + 
+				File.separator + relatorio + ".jasper"; 
 		
 		//Carrega o arquivo jasper passando os dados
 		JasperPrint impressoraJasper = JasperFillManager.

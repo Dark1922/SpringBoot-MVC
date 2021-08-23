@@ -168,14 +168,25 @@ form input[type=submit] {
 
 		<div class="row">
 			<form action="pesquisarpessoa" style="margin-top: 40px;"
-				method="post" class="col s12">
+				method="post" class="col s12" id="pesquisarpessoa">
+				
 				<div class="col s6">
 					<label for="nomepesquisa" class="active">Pesquisa por nome:</label>
 					<input name="nomepesquisa" id="nomepesquisa" class="validate">
 
-					<input type="submit" value="Buscar"
+					<div class="col 12">
+				  <input type="submit" value="Buscar"
 						class="waves-effect waves-light blue btn">
-				</div>
+						
+						<input type="submit" value="PDF"
+						class="waves-effect waves-light grey btn"
+						onclick="document.getElementById('pesquisarpessoa').method = 'get'">
+						
+                  </div>
+                </div>				
+				
+				
+				
 				
 				<div class="col s6">
 				<label for="pesqsexo" class="active">Pesquisa Sexo</label>
