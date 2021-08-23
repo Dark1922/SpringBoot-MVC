@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import javax.persistence.CascadeType;
 import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
@@ -154,7 +153,8 @@ public class PessoaController {
 	
 	//n interessa oque vem antes de url
 	@PostMapping("**/pesquisarpessoa")
-	public ModelAndView pesquisar(@RequestParam("nomepesquisa") String nomepesquisa) {
+	public ModelAndView pesquisar(@RequestParam("nomepesquisa") String nomepesquisa,
+			@RequestParam("pesqsexo") String pesqsexo) {
 		
 		//vai consultar e retornar para mesma tela de cadastro
 		ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa");

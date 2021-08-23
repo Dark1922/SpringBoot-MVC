@@ -24,10 +24,17 @@ form input[type=submit] {
 </style>
 </head>
 <body>
-	<h3 style="margin-left: 20px;">Spring Boot + Thymeleaf + Material
-		Design Lite</h3>
-	<h5 style="margin-top: 40px; margin-left: 20px;">Cadastro de
-		Pessoa</h5>
+	<div class="row col s12">
+
+		<div class="col s11">
+			<h3 style="margin-left: 20px;">Spring Boot + Thymeleaf +
+				Material Design Lite</h3>
+		</div>
+
+		<div class="col s1" style="margin-top: 10px">
+			<a class="waves-effect waves-light btn" type="submit" href="/logout">Logout</a>
+		</div>
+	</div>
 	<!-- url do controller pra salvar a pessoa -->
 	<!-- vai trabalhar com objeto ai passa essa tag do thymeleaf th:object="pessoaobj" obj do controller -->
 
@@ -39,276 +46,296 @@ form input[type=submit] {
 		<!-- passa um texto com nosso objeto de msg dos erro de validação -->
 	</div>
 
+	<fieldset style="margin-top: 60px;">
+		<legend style="text-align: center; font-size: 20px;">Cadastro
+			de Pessoa</legend>
+		<div class="row">
+
+			<form action="salvarpessoa" method="post" th:object="${pessoaobj}"
+				class="col s12" id="formpessoa">
+				<!-- coluna é feito pelo tamanho 12 -->
+
+				<div class="row">
+					<!-- vao ficar dentro de uma linha -->
+
+					<div class="input-fiel col s1">
+						<label for="id">ID</label> <input name="id" th:field="*{id}"
+							readonly="readonly" id="id">
+						<!-- aponta os atributos que vamos por em edição th:field -->
+					</div>
+
+					<div class="input-fiel col s5">
+						<label for="nome" class="active">Nome</label> <input name="nome"
+							autocomplete="name" th:field="*{nome}" id="nome" class="validate"
+							placeholder="Informe o nome">
+					</div>
+
+				</div>
+
+				<div class="row">
+					<div class="input-fiel col s6">
+						<label for="sobrenome" class="active">Sobrenome</label> <input
+							name="sobrenome" th:field="*{sobrenome}" id="sobrenome"
+							class="validate">
+					</div>
+				</div>
+
+				<!-- sec:authorize="hasRole('ROLE_CAIXA')"  so admin pode acessar massa -->
+				<div class="row" sec:authorize="hasRole('ROLE_CAIXA')">
+					<div class="input-fiel col s2">
+						<label for="idade" class="active">Idade</label> <input
+							name="idade" th:field="*{idade}" type="number" maxlength="2"
+							id="idade" class="validate" placeholder="sua idade">
+					</div>
+					<div class="input-fiel col s4">
+
+						<label for="sexopessoa" class="active">Sexo</label>
+						 <select th:field="*{sexopessoa}" class="browser-default"  id="sexopessoa"
+							required="required">
+							<!--th:field endica a model desse atributo da pessoa  -->
+							<!-- pega layout do propio navegador -->
+							<option value="" disabled selected th:text="Selecione">Selecione</option>
+							<option value="MASCULINO" th:text="Masculino"></option>
+							<option value="FEMININO" th:text="Feminino"></option>
+							 
+						</select>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="input-fiel col s6">
+						<label for="cep" class="active">Cep</label> <input name="cep"
+							th:field="*{cep}" id="cep" class="validate"
+							placeholder="Digite um cep válido">
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="input-fiel col s6">
+						<label for="rua" class="active">Rua</label> <input name="rua"
+							th:field="*{rua}" id="rua" class="validate">
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="input-fiel col s6">
+						<label for="bairro" class="active">Bairro</label> <input
+							name="bairro" th:field="*{bairro}" id="bairro" class="validate">
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="input-fiel col s6">
+						<label for="cidade" class="active">Cidade</label> <input
+							name="cidade" th:field="*{cidade}" id="cidade" class="validate">
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="input-fiel col s6">
+						<label for="uf" class="active">UF</label> <input name="uf"
+							th:field="*{uf}" id="uf" class="validate">
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="input-fiel col s6">
+						<label for="ibge" class="active">Ibge</label> <input name="ibge"
+							th:field="*{ibge}" id="ibge" class="validate">
+					</div>
+				</div>
+
+
+				<div class="row">
+					<div class="input-field col s12">
+						<input class="waves-effect waves-light btn" type="submit"
+							value="Salvar" />
+
+						<button class="waves-effect waves-light btn"
+							onclick="document.getElementById('formpessoa').reset(); ">Novo</button>
+					</div>
+				</div>
+			</form>
+		</div>
+
+	</fieldset>
+
+
+
+	<fieldset>
+		<legend style="text-align: center; font-size: 20px;">Campos
+			de pesquisa</legend>
+
+		<div class="row">
+			<form action="pesquisarpessoa" style="margin-top: 40px;"
+				method="post" class="col s12">
+				<div class="col s6">
+					<label for="nomepesquisa" class="active">Pesquisa por nome:</label>
+					<input name="nomepesquisa" id="nomepesquisa" class="validate">
+
+					<input type="submit" value="Buscar"
+						class="waves-effect waves-light blue btn">
+				</div>
+				
+				<div class="col s6">
+				<label for="pesqsexo" class="active">Pesquisa Sexo</label>
+				<select class="browser-default"  
+							required="required" name="pesqsexo" id="pesqsexo">
+							<option value="" disabled selected th:text="Selecione">Selecione</option>
+							<option value="MASCULINO" th:text="Masculino"></option>
+							<option value="FEMININO" th:text="Feminino"></option>
+						</select>
+				</div>
+				
+			</form>
+		</div>
+
+	</fieldset>
+
 	<div class="row">
-
-		<form action="salvarpessoa" method="post" th:object="${pessoaobj}"
-			class="col s12" id="formpessoa">
-			<!-- coluna é feito pelo tamanho 12 -->
-
-			<div class="row">
-				<!-- vao ficar dentro de uma linha -->
-
-				<div class="input-fiel col s1">
-					<label for="id">ID</label> <input name="id" th:field="*{id}"
-						readonly="readonly" id="id">
-					<!-- aponta os atributos que vamos por em edição th:field -->
-				</div>
-
-				<div class="input-fiel col s5">
-					<label for="nome" class="active">Nome</label> <input name="nome"
-						autocomplete="name" th:field="*{nome}" id="nome" class="validate"
-						placeholder="Informe o nome">
-				</div>
-
-			</div>
-
-			<div class="row">
-				<div class="input-fiel col s6">
-					<label for="sobrenome" class="active">Sobrenome</label> <input
-						name="sobrenome" th:field="*{sobrenome}" id="sobrenome"
-						class="validate">
-				</div>
-			</div>
-
-			<!-- sec:authorize="hasRole('ROLE_CAIXA')"  so admin pode acessar massa -->
-			<div class="row" sec:authorize="hasRole('ROLE_CAIXA')">
-				<div class="input-fiel col s2">
-					<label for="idade" class="active">Idade</label> <input name="idade"
-						th:field="*{idade}" type="number" maxlength="2" id="idade"
-						class="validate" placeholder="sua idade">
-				</div>
-				<div class="input-fiel col s4">
-
-					<label for="sexopessoa" class="active">Sexo</label> 
-					<select
-						class="browser-default"  
-						th:field="*{sexopessoa}" id="sexopessoa"> <!--th:field endica a model desse atributo da pessoa  -->
-						<!-- pega layout do propio navegador -->
-						
-						<option value="" disabled selected >Selecione</option>
-                         <option value="MASCULINO" th:text="Masculino" >  
-						 	<option value="FEMININO" th:text="Feminino" > 
-			 </select>
-			 
-			</div>
-		</div>
-		
-		<div class="row">
-		<div class="input-fiel col s6">
-		<label for="cep" class="active">Cep</label> 
-		<input name="cep"  th:field="*{cep}" id="cep" class="validate" placeholder="Digite um cep válido"> 
-		</div>
-		</div>
-		
-		<div class="row">
-		<div class="input-fiel col s6">
-		<label for="rua" class="active">Rua</label> 
-		<input name="rua"  th:field="*{rua}" id="rua" class="validate"> 
-		</div>
-		</div>
-		
-		<div class="row">
-		<div class="input-fiel col s6">
-		<label for="bairro" class="active">Bairro</label> 
-		<input name="bairro"  th:field="*{bairro}" id="bairro" class="validate"> 
-		</div>
-		</div>
-		
-		<div class="row">
-		<div class="input-fiel col s6">
-		<label for="cidade" class="active">Cidade</label> 
-		<input name="cidade"  th:field="*{cidade}" id="cidade" class="validate"> 
-		</div>
-		</div>
-		
-		<div class="row">
-		<div class="input-fiel col s6">
-		<label for="uf" class="active">UF</label> 
-		<input name="uf"  th:field="*{uf}" id="uf" class="validate"> 
-		</div>
-		</div>
-		
-			<div class="row">
-		<div class="input-fiel col s6">
-		<label for="ibge" class="active">Ibge</label> 
-		<input name="ibge"  th:field="*{ibge}" id="ibge" class="validate"> 
-		</div>
-		</div>
-		
-		
-		<div class="row">
-		<div class="input-field col s12">
-		<input class="waves-effect waves-light btn" type="submit" value="Salvar"/>
-		
-		<button class="waves-effect waves-light btn"  onclick="document.getElementById('formpessoa').reset(); ">Novo</button>
-		</div>
-		</div>
-	</form>
-	</div>
-	
-	<div class="row">
-	<a class="waves-effect waves-light btn col s12" href="/listapessoas" style="margin-top:10px;" >Lista de Pessoas</a>
+		<a class="waves-effect waves-light btn col s12" href="/listapessoas"
+			style="margin-top: 10px;">Lista de Pessoas</a>
 	</div>
 
 	<div class="row">
-		<form action="pesquisarpessoa" style="margin-top: 20px;" method="post"
-			class="col s5">
-			<label for="nomepesquisa" class="active">Pesquisa por nome:</label> <input
-				name="nomepesquisa" id="nomepesquisa" class="validate"> <input
-				type="submit" value="Buscar"
-				class="waves-effect waves-light blue btn">
-		</form>
+		<table style="margin-top: 15px;" class="striped col s12">
+
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>Nome</th>
+					<th>Sobrenome</th>
+					<th>Idade</th>
+					<th>Editar</th>
+					<th>Excluir</th>
+				</tr>
+			</thead>
+
+			<!-- pessoas é oq vai vir do banco de dados e pessoa é oque vai interar / usar pra mostrar na tela -->
+			<tr th:each="pessoa : ${pessoas}">
+				<td th:text="${pessoa.id}" width="100" />
+				<td><a style="color: black;"
+					th:href="@{/telefones/{idpessoa}(idpessoa=${pessoa.id})}"><span
+						th:text="${pessoa.nome}"></span></a></td>
+				<td th:text="${pessoa.sobrenome}" />
+				<td th:text="${pessoa.idade}" />
+				<!-- editar o parametros junto com o idpesosa id da pessoa onde o idpessoa é igual o id da linha -->
+				<td><a
+					th:href="@{/editarpessoa/{idpessoa}(idpessoa=${pessoa.id})}"
+					class="waves-effect waves-light btn">Editar</a></td>
+				<td><a
+					th:href="@{/removerpessoa/{idpessoa}(idpessoa=${pessoa.id})}"
+					class="waves-effect waves-light red btn">Excluir</a></td>
+			</tr>
+		</table>
 	</div>
-  
-  
-    <div class="row">
-	<table style="margin-top:15px;"  class="striped col s12">
-	
-	<thead>
-          <tr>
-          <th>Id</th>
-              <th>Nome</th>
-              <th>Sobrenome</th>
-              <th>Idade</th>
-              <th>Editar</th>
-              <th>Excluir</th>
-          </tr>
-        </thead>
-	
-	<!-- pessoas é oq vai vir do banco de dados e pessoa é oque vai interar / usar pra mostrar na tela -->
-	<tr th:each = "pessoa : ${pessoas}">
-	<td th:text = "${pessoa.id}"   width="100"/>
-	<td><a style="color:black;" th:href="@{/telefones/{idpessoa}(idpessoa=${pessoa.id})}"><span th:text = "${pessoa.nome}"></span></a></td>
-	<td th:text = "${pessoa.sobrenome}"/>
-	<td th:text = "${pessoa.idade}"/>
-	<!-- editar o parametros junto com o idpesosa id da pessoa onde o idpessoa é igual o id da linha -->
-	<td><a th:href="@{/editarpessoa/{idpessoa}(idpessoa=${pessoa.id})}" class="waves-effect waves-light btn" >Editar</a></td>
-		<td><a th:href="@{/removerpessoa/{idpessoa}(idpessoa=${pessoa.id})}" class="waves-effect waves-light red btn" >Excluir</a></td>
-	</tr>
-	</table>
-	</div>
-	
-	
-	
-	
-        <footer class="page-footer grey">
-         
-          <div>
-            <div class="container" style="justify-content:center; display:flex" >
-            © 2021 Copyright Text
-          
-            </div>
-          </div>
-        </footer>
-	
+
+
+
+
+	<footer class="page-footer grey">
+
+		<div>
+			<div class="container" style="justify-content: center; display: flex">
+				© 2021 Copyright Text</div>
+		</div>
+	</footer>
+
 	<!-- Compiled and minified JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    
-     <!-- Adicionando Javascript -->
-    <script>
-					$(document)
-							.ready(
-									function() {
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
-										function limpa_formulário_cep() {
-											// Limpa valores do formulário de cep.
-											$("#rua").val("");
-											$("#bairro").val("");
-											$("#cidade").val("");
-											$("#uf").val("");
-											$("#ibge").val("");
-										}
+	<!-- Adicionando Javascript -->
+	<script>
+		$(document)
+				.ready(
+						function() {
 
-										//Quando o campo cep perde o foco.
-										$("#cep")
-												.blur(
-														function() {
+							function limpa_formulário_cep() {
+								// Limpa valores do formulário de cep.
+								$("#rua").val("");
+								$("#bairro").val("");
+								$("#cidade").val("");
+								$("#uf").val("");
+								$("#ibge").val("");
+							}
 
-															//Nova variável "cep" somente com dígitos.
-															var cep = $(this)
-																	.val()
-																	.replace(
-																			/\D/g,
-																			'');
+							//Quando o campo cep perde o foco.
+							$("#cep")
+									.blur(
+											function() {
 
-															//Verifica se campo cep possui valor informado.
-															if (cep != "") {
+												//Nova variável "cep" somente com dígitos.
+												var cep = $(this).val()
+														.replace(/\D/g, '');
 
-																//Expressão regular para validar o CEP.
-																var validacep = /^[0-9]{8}$/;
+												//Verifica se campo cep possui valor informado.
+												if (cep != "") {
 
-																//Valida o formato do CEP.
-																if (validacep
-																		.test(cep)) {
+													//Expressão regular para validar o CEP.
+													var validacep = /^[0-9]{8}$/;
 
-																	//Preenche os campos com "..." enquanto consulta webservice.
-																	$("#rua")
-																			.val(
-																					"...");
-																	$("#bairro")
-																			.val(
-																					"...");
-																	$("#cidade")
-																			.val(
-																					"...");
-																	$("#uf")
-																			.val(
-																					"...");
-																	$("#ibge")
-																			.val(
-																					"...");
+													//Valida o formato do CEP.
+													if (validacep.test(cep)) {
 
-																	//Consulta o webservice viacep.com.br/
-																	$
-																			.getJSON(
-																					"https://viacep.com.br/ws/"
-																							+ cep
-																							+ "/json/?callback=?",
-																					function(
-																							dados) {
+														//Preenche os campos com "..." enquanto consulta webservice.
+														$("#rua").val("...");
+														$("#bairro").val("...");
+														$("#cidade").val("...");
+														$("#uf").val("...");
+														$("#ibge").val("...");
 
-																						if (!("erro" in dados)) {
-																							//Atualiza os campos com os valores da consulta.
-																							$(
-																									"#rua")
-																									.val(
-																											dados.logradouro);
-																							$(
-																									"#bairro")
-																									.val(
-																											dados.bairro);
-																							$(
-																									"#cidade")
-																									.val(
-																											dados.localidade);
-																							$(
-																									"#uf")
-																									.val(
-																											dados.uf);
-																							$(
-																									"#ibge")
-																									.val(
-																											dados.ibge);
-																						} //end if.
-																						else {
-																							//CEP pesquisado não foi encontrado.
-																							limpa_formulário_cep();
-																							alert("CEP não encontrado.");
-																						}
-																					});
-																} //end if.
-																else {
-																	//cep é inválido.
-																	limpa_formulário_cep();
-																	alert("Formato de CEP inválido.");
-																}
-															} //end if.
-															else {
-																//cep sem valor, limpa formulário.
-																limpa_formulário_cep();
-															}
-														});
-									});
-				</script>
+														//Consulta o webservice viacep.com.br/
+														$
+																.getJSON(
+																		"https://viacep.com.br/ws/"
+																				+ cep
+																				+ "/json/?callback=?",
+																		function(
+																				dados) {
+
+																			if (!("erro" in dados)) {
+																				//Atualiza os campos com os valores da consulta.
+																				$(
+																						"#rua")
+																						.val(
+																								dados.logradouro);
+																				$(
+																						"#bairro")
+																						.val(
+																								dados.bairro);
+																				$(
+																						"#cidade")
+																						.val(
+																								dados.localidade);
+																				$(
+																						"#uf")
+																						.val(
+																								dados.uf);
+																				$(
+																						"#ibge")
+																						.val(
+																								dados.ibge);
+																			} //end if.
+																			else {
+																				//CEP pesquisado não foi encontrado.
+																				limpa_formulário_cep();
+																				alert("CEP não encontrado.");
+																			}
+																		});
+													} //end if.
+													else {
+														//cep é inválido.
+														limpa_formulário_cep();
+														alert("Formato de CEP inválido.");
+													}
+												} //end if.
+												else {
+													//cep sem valor, limpa formulário.
+													limpa_formulário_cep();
+												}
+											});
+						});
+	</script>
 </body>
 </html>
