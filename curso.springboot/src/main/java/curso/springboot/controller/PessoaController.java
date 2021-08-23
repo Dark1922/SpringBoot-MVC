@@ -156,12 +156,22 @@ public class PessoaController {
 	public ModelAndView pesquisar(@RequestParam("nomepesquisa") String nomepesquisa,
 			@RequestParam("pesqsexo") String pesqsexo) {
 		
+		List<Pessoa> pessoas = new ArrayList<Pessoa>(); 
+		
+		//diferente de nulo ou vazio ou seja tem alguma coisa
+		if(pesqsexo != null && !pesqsexo.isEmpty() ) {
+			
+			pessoas = pessoaRepository.findPessoaByNameSexo(nomepesquisa.trim().toUpperCase(), pesqsexo);
+		}else {
+			pessoas = pessoaRepository.findPessoaByName(nomepesquisa.trim().toUpperCase());	
+		}
+		
+		
 		//vai consultar e retornar para mesma tela de cadastro
 		ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa");
 		
-		//objeto pessoas vai passar o parametro de pesquisar por nome
-		//vai pesquisar todas pessoas de acordo com a pesquisar que vier
-		modelAndView.addObject("pessoas", pessoaRepository.findPessoaByName(nomepesquisa.trim().toUpperCase()));
+		//passa a lista de pessoas
+		modelAndView.addObject("pessoas", pessoas);
 		
 		//objeto vazio pro formulário trabalhar corretamente
 		modelAndView.addObject("pessoaobj", new Pessoa());

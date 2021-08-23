@@ -26,12 +26,12 @@ form input[type=submit] {
 <body>
 	<div class="row col s12">
 
-		<div class="col s11">
+		<div class="col s9">
 			<h3 style="margin-left: 20px;">Spring Boot + Thymeleaf +
 				Material Design Lite</h3>
 		</div>
 
-		<div class="col s1" style="margin-top: 10px">
+		<div class="col s2" style="margin-top: 10px">
 			<a class="waves-effect waves-light btn" type="submit" href="/logout">Logout</a>
 		</div>
 	</div>
@@ -91,10 +91,10 @@ form input[type=submit] {
 
 						<label for="sexopessoa" class="active">Sexo</label>
 						 <select th:field="*{sexopessoa}" class="browser-default"  id="sexopessoa"
-							required="required">
+							>
 							<!--th:field endica a model desse atributo da pessoa  -->
 							<!-- pega layout do propio navegador -->
-							<option value="" disabled selected th:text="Selecione">Selecione</option>
+							<option value="">Selecione</option>
 							<option value="MASCULINO" th:text="Masculino"></option>
 							<option value="FEMININO" th:text="Feminino"></option>
 							 
@@ -180,8 +180,8 @@ form input[type=submit] {
 				<div class="col s6">
 				<label for="pesqsexo" class="active">Pesquisa Sexo</label>
 				<select class="browser-default"  
-							required="required" name="pesqsexo" id="pesqsexo">
-							<option value="" disabled selected th:text="Selecione">Selecione</option>
+							 name="pesqsexo" id="pesqsexo">
+							<option value="" >Todos</option>
 							<option value="MASCULINO" th:text="Masculino"></option>
 							<option value="FEMININO" th:text="Feminino"></option>
 						</select>
