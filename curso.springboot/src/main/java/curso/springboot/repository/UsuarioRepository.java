@@ -1,7 +1,5 @@
 package curso.springboot.repository;
 
-import javax.transaction.Transactional;
-
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -9,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import curso.springboot.model.Usuario;
 
 @Repository
-@Transactional
+@org.springframework.transaction.annotation.Transactional
 public interface UsuarioRepository extends CrudRepository<Usuario, Long> {
 
 	//select usuario from na tabela Usuario onde usuario.login =  ao 1 parametro login passado

@@ -73,21 +73,31 @@ form input[type=submit] {
 				</div>
 
 				<div class="row">
-					<div class="input-fiel col s6">
+					<div class="input-fiel col s4">
 						<label for="sobrenome" class="active">Sobrenome</label> <input
 							name="sobrenome" th:field="*{sobrenome}" id="sobrenome"
 							class="validate">
+							
 					</div>
+				<div class="input-fiel col s2">
+				<label for="profissao" class="active">Profissão</label>
+				  <select class="browser-default" id="profissao" th:field="*{profissao}">
+				  <option value="">Selecione Profissão</option>
+				  <option th:each = "p : ${profissoes}" th:value="${p.id}" th:text="${p.nome}">
+				  
+				  </select>
+				  
+				</div>
 				</div>
 
 				<!-- sec:authorize="hasRole('ROLE_CAIXA')"  so admin pode acessar massa -->
 				<div class="row" sec:authorize="hasRole('ROLE_CAIXA')">
-					<div class="input-fiel col s2">
+					<div class="input-fiel col s4">
 						<label for="idade" class="active">Idade</label> <input
 							name="idade" th:field="*{idade}" type="number" maxlength="2"
 							id="idade" class="validate" placeholder="sua idade">
 					</div>
-					<div class="input-fiel col s4">
+					<div class="input-fiel col s2">
 
 						<label for="sexopessoa" class="active">Sexo</label>
 						 <select th:field="*{sexopessoa}" class="browser-default"  id="sexopessoa"
@@ -101,6 +111,8 @@ form input[type=submit] {
 						</select>
 					</div>
 				</div>
+				
+				
 
 				<div class="row">
 					<div class="input-fiel col s6">

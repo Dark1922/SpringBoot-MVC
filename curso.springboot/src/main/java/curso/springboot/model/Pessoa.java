@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
@@ -40,6 +41,9 @@ public class Pessoa implements Serializable {
 	
 	@NotBlank(message = "Informe o Sexo.")
 	private String sexopessoa;
+	
+	@ManyToOne //muitas pessoas para essa profissão
+	private Profissao profissao;
 	
 	@NotBlank(message = "Informe o Cep.")
 	private String cep;

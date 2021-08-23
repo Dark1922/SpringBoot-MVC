@@ -22,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 import curso.springboot.model.Pessoa;
 import curso.springboot.model.Telefone;
 import curso.springboot.repository.PessoaRepository;
+import curso.springboot.repository.ProfissaoRepository;
 import curso.springboot.repository.TelefoneRepository;
 import lombok.AllArgsConstructor;
 
@@ -33,6 +34,7 @@ public class PessoaController {
 	private PessoaRepository pessoaRepository;
 	private TelefoneRepository telefoneRepository; 
 	private ReportUtil reportUtil;
+	private ProfissaoRepository profissaoRepository;
    
 
 	@RequestMapping(method = RequestMethod.GET, value = "/cadastropessoa")
@@ -49,6 +51,9 @@ public class PessoaController {
 
 		// para o objeto de pessoas joga a lista pramim
 		modelAndView.addObject("pessoas", pessoasIterator);
+		
+		//carrega todas profissao
+		modelAndView.addObject("profissoes", profissaoRepository.findAll());
 
 		return modelAndView;
 	}
@@ -97,6 +102,8 @@ public class PessoaController {
 		// para o objeto de pessoas joga a lista pramim
 		modelAndView.addObject("pessoas", pessoasIterator);
 		
+		modelAndView.addObject("profissoes", profissaoRepository.findAll());
+		
 		//objeto vazio pro formulário trabalhar corretamente
 		modelAndView.addObject("pessoaobj", new Pessoa());
 
@@ -131,6 +138,8 @@ public class PessoaController {
 		
 		//vai addicionar o objeto pessoa com get que vai buscar seus dados pra edição
 		modelAndView.addObject("pessoaobj", pessoa.get());
+		
+		modelAndView.addObject("profissoes", profissaoRepository.findAll());
 		
 		
 		return modelAndView;
