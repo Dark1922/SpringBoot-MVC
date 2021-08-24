@@ -44,6 +44,25 @@ public interface PessoaRepository extends JpaRepository<Pessoa, Long>{
 			
 			return pessoas;
 		}
+		
+		default Page<Pessoa> findPessoaBySexoPage(String nome, String sexo ,Pageable pageable) {
+			Pessoa pessoa = new Pessoa();
+			pessoa.setNome(nome);
+			pessoa.setSexopessoa(sexo);
+			
+			//se vai conter um valor , estamos configurando a pesquisa para consultar por partes do nome no banco de dados
+			//igual a like com sql,  ignoreCase() vai ignorar maiusculo e minusculo e vai ser o nome
+			ExampleMatcher exampleMatcher = ExampleMatcher.matchingAny()
+					.withMatcher("nome", ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase())
+			.withMatcher("sexopessoaq", ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase());
+			
+			//fazendo a união do objeto como o valor e a configuração para consultar 
+			Example<Pessoa> example = Example.of(pessoa, exampleMatcher);
+			
+			Page<Pessoa> pessoas = findAll(example, pageable);
+			
+			return pessoas;
+		}
 	
 	
 }

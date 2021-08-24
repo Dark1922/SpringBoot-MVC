@@ -192,6 +192,7 @@ public class PessoaController {
 		if(pesqsexo != null && !pesqsexo.isEmpty() ) {
 			
 			//pessoas = pessoaRepository.findPessoaByNameSexo(nomepesquisa.trim().toUpperCase(), pesqsexo);
+			pessoas = pessoaRepository.findPessoaBySexoPage(nomepesquisa, pesqsexo, pageable);
 		}else {
 			//pessoas = pessoaRepository.findPessoaByName(nomepesquisa.trim().toUpperCase());	 
 			pessoas = pessoaRepository.findPessoaByNamePage(nomepesquisa, pageable);
@@ -390,6 +391,8 @@ public class PessoaController {
 			modelAndView.addObject("pessoas", pagePessoa);//variavel pessoa a nossa paginação dos objetos
             
             modelAndView.addObject("pessoaobj", new Pessoa());//formulario carregar vazio evitar erro 
+            
+            modelAndView.addObject("nomepesquisa", nomepesquisa);
             
             modelAndView.setViewName("cadastro/cadastropessoa"); //retorno da tela
 			
