@@ -183,16 +183,18 @@ public class PessoaController {
 	//n interessa oque vem antes de url
 	@PostMapping("**/pesquisarpessoa")
 	public ModelAndView pesquisar(@RequestParam("nomepesquisa") String nomepesquisa,
-			@RequestParam("pesqsexo") String pesqsexo) {
+			@RequestParam("pesqsexo") String pesqsexo, @PageableDefault(size = 5, sort = {"nome"})
+	         Pageable pageable) { //paginação tamanho 5 por ordenação de nome e pageable de paginas
 		
-		List<Pessoa> pessoas = new ArrayList<Pessoa>(); 
+		Page<Pessoa> pessoas = null; 
 		
 		//diferente de nulo ou vazio ou seja tem alguma coisa
 		if(pesqsexo != null && !pesqsexo.isEmpty() ) {
 			
-			pessoas = pessoaRepository.findPessoaByNameSexo(nomepesquisa.trim().toUpperCase(), pesqsexo);
+			//pessoas = pessoaRepository.findPessoaByNameSexo(nomepesquisa.trim().toUpperCase(), pesqsexo);
 		}else {
-			pessoas = pessoaRepository.findPessoaByName(nomepesquisa.trim().toUpperCase());	
+			//pessoas = pessoaRepository.findPessoaByName(nomepesquisa.trim().toUpperCase());	 
+			pessoas = pessoaRepository.findPessoaByNamePage(nomepesquisa, pageable);
 		}
 		
 		
@@ -204,6 +206,11 @@ public class PessoaController {
 		
 		//objeto vazio pro formulário trabalhar corretamente
 		modelAndView.addObject("pessoaobj", new Pessoa());
+		
+		//deixar mantido em tela qnd pesqusiar o nome da pesosa
+		modelAndView.addObject("nomepesquisa", nomepesquisa);
+		
+		
 		
 		return modelAndView;
 	}
@@ -375,10 +382,10 @@ public class PessoaController {
 		}
 		@GetMapping("/pessoaspag")                     //vai carregar sempre 5 ent size 5
 		public ModelAndView carregaPessoasPorPaginacao(@PageableDefault(size = 5) Pageable pageable,
-				ModelAndView modelAndView) { //modelAndView controlador de tela
+				ModelAndView modelAndView, @RequestParam("nomepesquisa") String nomepesquisa) { //modelAndView controlador de tela
 			
 			//vai carregar do banco
-			Page<Pessoa> pagePessoa = pessoaRepository.findAll(pageable); //vai trazer páginado pag1 pag2 etc
+			Page<Pessoa> pagePessoa = pessoaRepository.findPessoaByNamePage(nomepesquisa, pageable); //vai trazer páginado pag1 pag2 etc
           
 			modelAndView.addObject("pessoas", pagePessoa);//variavel pessoa a nossa paginação dos objetos
             

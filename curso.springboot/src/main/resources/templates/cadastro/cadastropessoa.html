@@ -244,7 +244,8 @@ form input[type=submit] {
 
 				<div class="col s6">
 					<label for="nomepesquisa" class="active">Pesquisa por nome:</label>
-					<input name="nomepesquisa" id="nomepesquisa" class="validate">
+					<input name="nomepesquisa" id="nomepesquisa" class="validate" 
+					th:value="${nomepesquisa}">
 
 					<div class="col 12">
 						<input type="submit" value="Buscar"
@@ -323,17 +324,19 @@ form input[type=submit] {
    <div class="row" style="margin-top: 30px; text-align:center; font-size:18px;">
  
  
-     <span th:if="${pessoas.hasPrevious()}">
-         <a th:href="@{/pessoaspag(page=${pessoas.number-1}, size=${pessoas.size})}">Anterior</a>
+     <span th:if="${pessoas.hasPrevious()}"> <!-- se tiver avançado a paginação e tiver paginas anteriores pra ser mostrada pode retroceder -->
+         <a th:href="@{/pessoaspag(page=${pessoas.number-1}, size=${pessoas.size}, nomepesquisa=${nomepesquisa})}">Anterior</a>
      </span>
+     
+     
   <!-- i é o indice daonde começa , sequencia 0 tb onde começa, pessoas que tem todos os dados e o total de paginas - 1 pq retorna array iniciando em 0 -->
     <th:block th:each="i: ${#numbers.sequence(0, pessoas.totalPages - 1)}"> 
-            <a th:href="@{/pessoaspag(page=${i}, size=${pessoas.size})}">[[ ${i} + 1 ]],</a>
+            <a th:href="@{/pessoaspag(page=${i}, size=${pessoas.size}, nomepesquisa=${nomepesquisa})}">[[ ${i} + 1 ]],</a>
             <!-- método do nosso backend de paginação na posiçaõ do i  [[ ${i} +1 ]] montar a paginação pra gente na tela-->
     </th:block>
     
-    <span th:if="${pessoas.hasNext()}">
-         <a th:href="@{/pessoaspag(page=${pessoas.number+1}, size=${pessoas.size})}">Próximo</a>
+    <span th:if="${pessoas.hasNext()}"> <!-- eqnt tiver páginas pela frente ele vai avaçar até o seu máximo da size tamanho da página -->
+         <a th:href="@{/pessoaspag(page=${pessoas.number+1}, size=${pessoas.size}, nomepesquisa=${nomepesquisa})}">Próximo</a>
      </span>
     
  
@@ -342,9 +345,10 @@ form input[type=submit] {
 
 	<footer class="page-footer grey">
 
-		<div>
+		<div class="row">
 			<div class="container" style="justify-content: center; display: flex">
-				© 2021 Copyright Text</div>
+				© 2021 Copyright Text
+				</div>
 		</div>
 	</footer>
 
