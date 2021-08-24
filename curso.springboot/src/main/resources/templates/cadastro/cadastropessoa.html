@@ -118,7 +118,7 @@ form input[type=submit] {
 				<label for="cargo" class="active">Cargos</label>
 				  <select class="browser-default" id="cargo" th:field="*{cargo}">
 				  <option value="">Selecione um Cargo</option>
-				  <option th:each = "c : ${T(curso.springboot.model.Cargo).values()}" th:value="${c}" th:text="${c.nome}">
+				  <option th:each = "c : ${T(curso.springboot.model.Cargo).values()}" th:value="${c.valor}" th:text="${c.nome}">
 				  
 				  </select>
 				

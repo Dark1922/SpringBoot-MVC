@@ -8,6 +8,8 @@ public enum Cargo {
 
 	private String nome;
 	
+	private String valor;
+	
 	private Cargo(String nome) {
 
 		this.nome = nome;
@@ -21,8 +23,11 @@ public enum Cargo {
 		return nome;
 	}
 	
-	@Override
-	public String toString() {
+	public void setValor(String valor) {
+		this.valor = valor;
+	}
+	
+	public String getValor() {
 		return this.name();
 	}
 }
