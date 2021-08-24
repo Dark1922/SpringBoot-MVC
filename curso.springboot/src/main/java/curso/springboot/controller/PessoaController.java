@@ -1,5 +1,6 @@
 package curso.springboot.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import curso.springboot.model.Pessoa;
@@ -61,8 +63,9 @@ public class PessoaController {
 	// **/salvarpessoa ele intercepta salvar pessoa de qualquer forma
 	//ignora tudo que venha antes e pegue a pessoa que quer salvar
 	//validações @Valid pra usar as validações do model
-	@PostMapping(value = "**/salvarpessoa")
-	public ModelAndView salvar(@Valid Pessoa pessoa, BindingResult bindingResult ) {
+	@PostMapping(value = "**/salvarpessoa", consumes = {"multipart/form-data"})
+	public ModelAndView salvar(@Valid Pessoa pessoa, BindingResult bindingResult,
+			final MultipartFile file) throws IOException {
 
 		//carrega o telefone dos filho pra poder atualizar pq está cascade = CascadeType.ALL
 		pessoa.setTelefones(telefoneRepository.getTelefones(pessoa.getId()));
@@ -90,6 +93,20 @@ public class PessoaController {
 			modelAndView.addObject("msg", msgValidacao);
 			
 			return modelAndView;
+		}
+		
+		if (file.getSize() > 0) { //salvando com upload se tiver colocado
+			pessoa.setCurriculo(file.getBytes());
+			pessoa.setTipoFileCurriculo(file.getContentType());
+			pessoa.setNomeFileCurriculo(file.getOriginalFilename());
+		
+		}else {
+			if (pessoa.getId() != null && pessoa.getId() > 0) {//editando pessoa com upload
+				Pessoa pessoaTemp = pessoaRepository.findById(pessoa.getId()).get();
+				pessoa.setCurriculo(pessoaTemp.getCurriculo());
+				pessoa.setTipoFileCurriculo(pessoaTemp.getTipoFileCurriculo());
+				pessoa.setNomeFileCurriculo(pessoaTemp.getNomeFileCurriculo());
+			}
 		}
 		
 		pessoaRepository.save(pessoa);

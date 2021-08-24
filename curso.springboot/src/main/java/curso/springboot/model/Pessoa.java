@@ -2,6 +2,7 @@ package curso.springboot.model;
 
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -11,12 +12,15 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -53,6 +57,17 @@ public class Pessoa implements Serializable {
 	@Enumerated(EnumType.STRING) //tag qie vai usar o enum e do tipo string
 	private Cargo cargo;
 	
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@Temporal(TemporalType.DATE)
+	private Date dataNascimento;
+	
+	@Lob
+	private byte[] curriculo;
+	
+	private String nomeFileCurriculo;
+
+	private String tipoFileCurriculo;
+ 	
 	private String rua;
 	
 	private String bairro;
@@ -62,6 +77,8 @@ public class Pessoa implements Serializable {
 	private String uf;
 	
 	private String ibge;
+
+    private String complemento;	
 	
 	//referencia o nome do relacionamento da outra classe
 	//orphanRemoval = true, cascade = CascadeType.ALL permite excluir em cascata

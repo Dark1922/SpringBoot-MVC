@@ -16,12 +16,16 @@
 	integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
 	crossorigin="anonymous"></script>
 
+
+
 <!-- onde todos botão do form input do tipo submit sejam da cor branca -->
 <style type="text/css">
 form input[type=submit] {
 	color: white
 }
 </style>
+
+
 </head>
 <body>
 	<div class="row col s12">
@@ -52,7 +56,7 @@ form input[type=submit] {
 		<div class="row">
 
 			<form action="salvarpessoa" method="post" th:object="${pessoaobj}"
-				class="col s12" id="formpessoa">
+				class="col s12" id="formpessoa" enctype="multipart/form-data">
 				<!-- coluna é feito pelo tamanho 12 -->
 
 				<div class="row">
@@ -77,17 +81,17 @@ form input[type=submit] {
 						<label for="sobrenome" class="active">Sobrenome</label> <input
 							name="sobrenome" th:field="*{sobrenome}" id="sobrenome"
 							class="validate">
-							
+
 					</div>
-				<div class="input-fiel col s6">
-				<label for="profissao" class="active">Profissão</label>
-				  <select class="browser-default" id="profissao" th:field="*{profissao}">
-				  <option value="">Selecione Profissão</option>
-				  <option th:each = "p : ${profissoes}" th:value="${p.id}" th:text="${p.nome}">
-				  
-				  </select>
-				  
-				</div>
+					<div class="input-fiel col s6">
+						<label for="profissao" class="active">Profissão</label> <select
+							class="browser-default" id="profissao" th:field="*{profissao}">
+							<option value="">Selecione Profissão</option>
+							<option th:each="p : ${profissoes}" th:value="${p.id}"
+								th:text="${p.nome}">
+						</select>
+
+					</div>
 				</div>
 
 				<!-- sec:authorize="hasRole('ROLE_CAIXA')"  so admin pode acessar massa -->
@@ -99,30 +103,52 @@ form input[type=submit] {
 					</div>
 					<div class="input-fiel col s6">
 
-						<label for="sexopessoa" class="active">Sexo</label>
-						 <select th:field="*{sexopessoa}" class="browser-default"  id="sexopessoa"
-							>
+						<label for="sexopessoa" class="active">Sexo</label> <select
+							th:field="*{sexopessoa}" class="browser-default" id="sexopessoa">
 							<!--th:field endica a model desse atributo da pessoa  -->
 							<!-- pega layout do propio navegador -->
 							<option value="">Selecione</option>
 							<option value="MASCULINO" th:text="Masculino"></option>
 							<option value="FEMININO" th:text="Feminino"></option>
-							 
+
 						</select>
 					</div>
 				</div>
-				
+
 				<div class="row">
-				
-				<div class="input-fiel col s12">
-				<label for="cargo" class="active">Cargos</label>
-				  <select class="browser-default" id="cargo" th:field="*{cargo}">
-				  <option value="">Selecione um Cargo</option>
-				  <option th:each = "c : ${T(curso.springboot.model.Cargo).values()}" th:value="${c.valor}" th:text="${c.nome}">
-				  
-				  </select>
-				
+
+					<div class="input-fiel col s6">
+						<label for="cargo" class="active">Cargos</label> <select
+							class="browser-default" id="cargo" th:field="*{cargo}">
+							<option value="">Selecione um Cargo</option>
+							<option th:each="c : ${T(curso.springboot.model.Cargo).values()}"
+								th:value="${c.valor}" th:text="${c.nome}">
+						</select>
+
+					</div>
+					<div class="input-fiel col s6">
+
+						<label for="dataNascimnto" class="active">Data de
+							Nascimento:</label> <input type="date" id="dataNascimento"
+							th:field="*{dataNascimento}" name="dataNascimento"
+							placeholder="Dat. nasc" class="validate">
+					</div>
+
 				</div>
+
+				<div class="row">
+					<div class="input-fiel col s12 ">
+
+						<div class="file-field input-field">
+							<div class="btn">
+								<label for="file" class="active" style="color:white">Curricúlo</label> <input
+									type="file" id="file" name="file" class="validate">
+							</div>
+							<div class="file-path-wrapper">
+								<input class="file-path validate" type="text">
+							</div>
+						</div>
+					</div>
 				</div>
 
 				<div class="row">
@@ -151,6 +177,13 @@ form input[type=submit] {
 					<div class="input-fiel col s12">
 						<label for="cidade" class="active">Cidade</label> <input
 							name="cidade" th:field="*{cidade}" id="cidade" class="validate">
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="input-fiel col s12">
+						<label for="complemento" class="active">Complemento</label> <input
+							name="complemento" th:field="*{complemento}" id="complemento" class="validate">
 					</div>
 				</div>
 
@@ -192,35 +225,33 @@ form input[type=submit] {
 		<div class="row">
 			<form action="pesquisarpessoa" style="margin-top: 40px;"
 				method="post" class="col s12" id="pesquisarpessoa">
-				
+
 				<div class="col s6">
 					<label for="nomepesquisa" class="active">Pesquisa por nome:</label>
 					<input name="nomepesquisa" id="nomepesquisa" class="validate">
 
 					<div class="col 12">
-				  <input type="submit" value="Buscar"
-						class="waves-effect waves-light blue btn">
-						
-						<input type="submit" value="PDF"
-						class="waves-effect waves-light grey btn"
-						onclick="document.getElementById('pesquisarpessoa').method = 'get'">
-						
-                  </div>
-                </div>				
-				
-				
-				
-				
-				<div class="col s6">
-				<label for="pesqsexo" class="active">Pesquisa Sexo</label>
-				<select class="browser-default"  
-							 name="pesqsexo" id="pesqsexo">
-							<option value="" >Todos</option>
-							<option value="MASCULINO" th:text="Masculino"></option>
-							<option value="FEMININO" th:text="Feminino"></option>
-						</select>
+						<input type="submit" value="Buscar"
+							class="waves-effect waves-light blue btn"> <input
+							type="submit" value="PDF"
+							class="waves-effect waves-light grey btn"
+							onclick="document.getElementById('pesquisarpessoa').method = 'get'">
+
+					</div>
 				</div>
-				
+
+
+
+
+				<div class="col s6">
+					<label for="pesqsexo" class="active">Pesquisa Sexo</label> <select
+						class="browser-default" name="pesqsexo" id="pesqsexo">
+						<option value="">Todos</option>
+						<option value="MASCULINO" th:text="Masculino"></option>
+						<option value="FEMININO" th:text="Feminino"></option>
+					</select>
+				</div>
+
 			</form>
 		</div>
 
@@ -284,6 +315,11 @@ form input[type=submit] {
 		$(document)
 				.ready(
 						function() {
+
+							$('#dataNascimento').datepicker({
+								showOthermonths : false,
+								format : 'yyyy-mm-dd'
+							});
 
 							function limpa_formulário_cep() {
 								// Limpa valores do formulário de cep.
