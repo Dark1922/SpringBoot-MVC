@@ -18,11 +18,27 @@
 
 
 
-<!-- onde todos botão do form input do tipo submit sejam da cor branca -->
+<!-- onde todos botão do form input do tipo submit sejam da cor branca  <!-- 
+
+bordar na tabela opcional
+table {
+width: 100%
+}
+
+table td, table th {
+border: 1px solid grey;
+}
+
+table th  {
+background: #eee;
+}
+-->
 <style type="text/css">
 form input[type=submit] {
-	color: white
+	color: white;
 }
+
+
 </style>
 
 
@@ -303,7 +319,25 @@ form input[type=submit] {
 		</table>
 	</div>
 
-
+   
+   <div class="row" style="margin-top: 30px; text-align:center; font-size:18px;">
+ 
+ 
+     <span th:if="${pessoas.hasPrevious()}">
+         <a th:href="@{/pessoaspag(page=${pessoas.number-1}, size=${pessoas.size})}">Anterior</a>
+     </span>
+  <!-- i é o indice daonde começa , sequencia 0 tb onde começa, pessoas que tem todos os dados e o total de paginas - 1 pq retorna array iniciando em 0 -->
+    <th:block th:each="i: ${#numbers.sequence(0, pessoas.totalPages - 1)}"> 
+            <a th:href="@{/pessoaspag(page=${i}, size=${pessoas.size})}">[[ ${i} + 1 ]],</a>
+            <!-- método do nosso backend de paginação na posiçaõ do i  [[ ${i} +1 ]] montar a paginação pra gente na tela-->
+    </th:block>
+    
+    <span th:if="${pessoas.hasNext()}">
+         <a th:href="@{/pessoaspag(page=${pessoas.number+1}, size=${pessoas.size})}">Próximo</a>
+     </span>
+    
+ 
+</div>
 
 
 	<footer class="page-footer grey">

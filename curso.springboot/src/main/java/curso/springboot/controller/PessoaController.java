@@ -384,7 +384,7 @@ public class PessoaController {
             
             modelAndView.addObject("pessoaobj", new Pessoa());//formulario carregar vazio evitar erro 
             
-            modelAndView.setViewName("cadastro/pessoa"); //retorno da tela
+            modelAndView.setViewName("cadastro/cadastropessoa"); //retorno da tela
 			
 			return modelAndView;
 			
