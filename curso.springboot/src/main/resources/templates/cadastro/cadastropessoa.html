@@ -270,7 +270,7 @@ form input[type=submit] {
 					<th>Id</th>
 					<th>Nome</th>
 					<th>Sobrenome</th>
-					<th>Idade</th>
+					<th>Curricúlo</th>
 					<th>Editar</th>
 					<th>Excluir</th>
 				</tr>
@@ -281,9 +281,17 @@ form input[type=submit] {
 				<td th:text="${pessoa.id}" width="100" />
 				<td><a style="color: black;"
 					th:href="@{/telefones/{idpessoa}(idpessoa=${pessoa.id})}"><span
-						th:text="${pessoa.nome}"></span></a></td>
+						th:text="${pessoa.nome}"></span></a></td>	
+				
 				<td th:text="${pessoa.sobrenome}" />
-				<td th:text="${pessoa.idade}" />
+				
+				<td><a
+				    th:if="${pessoa.curriculo} != null"
+					th:href="@{/baixarcurriculo/{idpessoa}(idpessoa=${pessoa.id})}"
+					class="waves-effect waves-light grey btn">Dowload</a>
+					<a   th:if="${pessoa.curriculo} == null" class="waves-effect waves-light orange btn">Não Existe</a>
+					</td>
+				
 				<!-- editar o parametros junto com o idpesosa id da pessoa onde o idpessoa é igual o id da linha -->
 				<td><a
 					th:href="@{/editarpessoa/{idpessoa}(idpessoa=${pessoa.id})}"
