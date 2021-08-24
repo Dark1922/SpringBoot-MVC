@@ -6,6 +6,8 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -47,6 +49,9 @@ public class Pessoa implements Serializable {
 	
 	@NotBlank(message = "Informe o Cep.")
 	private String cep;
+	
+	@Enumerated(EnumType.STRING) //tag qie vai usar o enum e do tipo string
+	private Cargo cargo;
 	
 	private String rua;
 	
