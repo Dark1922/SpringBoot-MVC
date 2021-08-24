@@ -9,6 +9,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -49,7 +54,7 @@ public class PessoaController {
 		
 		//carrega a lista qnd entrar no cadastropessoa
 		// retorna iterable por isso n vai por uma lista
-		Iterable<Pessoa> pessoasIterator = pessoaRepository.findAll();
+		Iterable<Pessoa> pessoasIterator = pessoaRepository.findAll(PageRequest.of(0, 5, Sort.by("nome")));
 
 		// para o objeto de pessoas joga a lista pramim
 		modelAndView.addObject("pessoas", pessoasIterator);
@@ -74,8 +79,7 @@ public class PessoaController {
 		if(bindingResult.hasErrors()) { //se tiver erro vai entrar aqui dentro
 			
 			ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa");
-			Iterable<Pessoa> pessoasIterator = pessoaRepository.findAll();
-			modelAndView.addObject("pessoas", pessoasIterator);
+			modelAndView.addObject("pessoas", pessoaRepository.findAll(PageRequest.of(0, 5, Sort.by("nome"))));
 			
 			//passa o objeto que ta vindo da view vai continuar os dados da pessoa
 			//fazer a validação e mostrar os erros que tá tendo
@@ -113,11 +117,9 @@ public class PessoaController {
 
 		ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa");
 
-		// retorna iterable por isso n vai por uma lista
-		Iterable<Pessoa> pessoasIterator = pessoaRepository.findAll();
 
 		// para o objeto de pessoas joga a lista pramim
-		modelAndView.addObject("pessoas", pessoasIterator);
+		modelAndView.addObject("pessoas", pessoaRepository.findAll(PageRequest.of(0, 5, Sort.by("nome"))));
 		
 		modelAndView.addObject("profissoes", profissaoRepository.findAll());
 		
@@ -132,11 +134,9 @@ public class PessoaController {
 
 		ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa");
 		
-		// retorna iterable por isso n vai por uma lista
-		Iterable<Pessoa> pessoasIterator = pessoaRepository.findAll();
 
 		// para o objeto de pessoas joga a lista pramim
-		modelAndView.addObject("pessoas", pessoasIterator);
+		modelAndView.addObject("pessoas",pessoaRepository.findAll(PageRequest.of(0, 5, Sort.by("nome"))));
 		
 		//objeto vazio pro formulário trabalhar corretamente
 		modelAndView.addObject("pessoaobj", new Pessoa());
@@ -288,6 +288,8 @@ public class PessoaController {
 			//vai retorna pra mesma tela de cadastro o retorno
 			ModelAndView modelAndView = new ModelAndView("cadastro/telefones");
 			
+            modelAndView.addObject("pessoas", pessoaRepository.findAll(PageRequest.of(0, 5, Sort.by("nome"))));
+			
 			//objeto pessoa pai pra mostrar na tela
 			modelAndView.addObject("pessoaobj", new Pessoa());
 			
@@ -369,5 +371,22 @@ public class PessoaController {
 				response.getOutputStream().write(pessoa.getCurriculo());
 				
 			}
+			
+		}
+		@GetMapping("/pessoaspag")                     //vai carregar sempre 5 ent size 5
+		public ModelAndView carregaPessoasPorPaginacao(@PageableDefault(size = 5) Pageable pageable,
+				ModelAndView modelAndView) { //modelAndView controlador de tela
+			
+			//vai carregar do banco
+			Page<Pessoa> pagePessoa = pessoaRepository.findAll(pageable); //vai trazer páginado pag1 pag2 etc
+          
+			modelAndView.addObject("pessoas", pagePessoa);//variavel pessoa a nossa paginação dos objetos
+            
+            modelAndView.addObject("pessoaobj", new Pessoa());//formulario carregar vazio evitar erro 
+            
+            modelAndView.setViewName("cadastro/pessoa"); //retorno da tela
+			
+			return modelAndView;
+			
 		}
 }

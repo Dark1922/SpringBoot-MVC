@@ -277,7 +277,7 @@ form input[type=submit] {
 			</thead>
 
 			<!-- pessoas é oq vai vir do banco de dados e pessoa é oque vai interar / usar pra mostrar na tela -->
-			<tr th:each="pessoa : ${pessoas}">
+			<tr th:each="pessoa : ${pessoas.content}"> <!-- conteudo da lista pra ficar definido -->
 				<td th:text="${pessoa.id}" width="100" />
 				<td><a style="color: black;"
 					th:href="@{/telefones/{idpessoa}(idpessoa=${pessoa.id})}"><span
