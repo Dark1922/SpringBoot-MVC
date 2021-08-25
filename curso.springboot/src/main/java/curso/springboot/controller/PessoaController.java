@@ -144,7 +144,7 @@ public class PessoaController {
 		return modelAndView;
 	}
 	//pega na url o id pessoa
-	@GetMapping("/editarpessoa/{idpessoa}")
+	@GetMapping("**/editarpessoa/{idpessoa}")
 	public ModelAndView	editar(@PathVariable("idpessoa") Long idpessoa) {
 		
 		//vai buscar o id da pessoa carregar o objeto do banco de dados consultou

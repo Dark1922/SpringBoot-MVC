@@ -11,14 +11,13 @@
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 
-<script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
-<link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />	
+ <!-- Adicionando JQuery -->
+    <script crossorigin="anonymous"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+            src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<!-- Adicionando JQuery -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"
-	integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
-	crossorigin="anonymous"></script>
-
+    <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+    <link href="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.css" rel="stylesheet" type="text/css"/>
 
 
 <!-- onde todos botão do form input do tipo submit sejam da cor branca  <!-- 
@@ -146,12 +145,10 @@ form input[type=submit] {
 
 					</div>
 					<div class="input-fiel col s6">
-
-						<label for="dataNascimnto" class="active">Data de
-							Nascimento:</label> <input type="date" id="dataNascimento"
-							th:field="*{dataNascimento}" name="dataNascimento"
-							placeholder="Dat. nasc" class="validate">
-					</div>
+                    <label for="dataNascimento">Data Nascimento:</label>
+                    <input type="date" id="dataNascimento" th:fiel="*{dataNascimento}"
+                           name="dataNascimento" placeholder="Data Nasc.">
+                </div>
 
 				</div>
 
@@ -370,11 +367,10 @@ form input[type=submit] {
 		$(document)
 				.ready(
 						function() {
-
 							$('#dataNascimento').datepicker({
-				        		showOthermonths:true,
-				        		format: 'yyyy-mm-dd'
-				        	});
+								showOthermonths : false,
+								format : 'yyyy-mm-dd'
+							});
 
 							function limpa_formulário_cep() {
 								// Limpa valores do formulário de cep.
