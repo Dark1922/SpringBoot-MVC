@@ -79,6 +79,7 @@ public class PessoaController {
 		if(bindingResult.hasErrors()) { //se tiver erro vai entrar aqui dentro
 			
 			ModelAndView modelAndView = new ModelAndView("cadastro/cadastropessoa");
+			
 			modelAndView.addObject("pessoas", pessoaRepository.findAll(PageRequest.of(0, 5, Sort.by("nome"))));
 			
 			//passa o objeto que ta vindo da view vai continuar os dados da pessoa
@@ -89,6 +90,7 @@ public class PessoaController {
 			
 			//varre os erros encontrados pelo objetos de erros e a lista do binding
 			for(ObjectError objectError : bindingResult.getAllErrors()) {
+				
 				
 				//getDefaultMessage() vem das anotações da model NotBlank e outras
 				msgValidacao.add(objectError.getDefaultMessage());
