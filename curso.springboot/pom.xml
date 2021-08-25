@@ -14,7 +14,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>curso.springboot</name>
 	<description>Construindo Projeto Springboot mvc</description>
-	<start-class>curso.springboot.Application</start-class>
+	
 	<properties>
 		<java.version>11</java.version>
 	</properties>
