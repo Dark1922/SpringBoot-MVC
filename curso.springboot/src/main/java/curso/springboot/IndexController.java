@@ -1,4 +1,4 @@
-package curso.springboot.controller;
+package curso.springboot;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class IndexController {
 
 	@RequestMapping("/")
-	public String login() {
+	public String login() { 
 		return "login";
 	}
 
