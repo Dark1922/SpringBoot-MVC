@@ -3,7 +3,7 @@
 
 ## 🔖 Layout / Link de acesso 
 
-Você pode visualizar o layout do projeto através desse linkspring-web-mvc-jdev-heroku.herokuapp.com , login admin: , senha: admin.
+Você pode visualizar o layout do projeto através desse link https://spring-web-mvc-jdev-heroku.herokuapp.com , login admin: , senha: admin.
 
 <h5 align="center">Parte 1 </h5>
 
