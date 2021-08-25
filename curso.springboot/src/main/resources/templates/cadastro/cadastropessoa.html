@@ -53,9 +53,7 @@ form input[type=submit] {
 				Material Design Lite</h3>
 		</div>
 
-		<div class="col s2" style="margin-top: 10px">
-			<a class="waves-effect waves-light btn" type="submit" href="/logout">Logout</a>
-		</div>
+		
 	</div>
 	<!-- url do controller pra salvar a pessoa -->
 	<!-- vai trabalhar com objeto ai passa essa tag do thymeleaf th:object="pessoaobj" obj do controller -->
@@ -112,7 +110,7 @@ form input[type=submit] {
 					</div>
 				</div>
 
-				<!-- sec:authorize="hasRole('ROLE_CAIXA')"  so admin pode acessar massa -->
+				<!-- sec:authorize="hasRole('ROLE_CAIXA')"  so admin pode acessar massa   -->
 				<div class="row" sec:authorize="hasRole('ROLE_CAIXA')">
 					<div class="input-fiel col s6">
 						<label for="idade" class="active">Idade</label> <input
